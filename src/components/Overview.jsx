@@ -1,6 +1,7 @@
 
 import { Card, Space, Calendar } from 'antd'
-import React from 'react'
+import React, { useContext } from 'react'
+import BudgetContext from '../context/BudgetContext';
 
 
 const Overview = () => {
@@ -8,13 +9,18 @@ const Overview = () => {
         console.log(value.format('YYYY-MM-DD'), mode);
     };
 
+    const budget = useContext(BudgetContext)
+
+
+    console.log(budget)
+
     return (
         <>
             <h2> Overview </h2>
             <div className='layout'>
                 <Space direction='vertical'>
                     <Card className='card-medium' title="Card title" hoverable={true}>
-                        <p>Card content</p>
+                        <p></p>
                         <p>Card content</p>
                     </Card>
                     <Card className='card-medium' title="Card title" hoverable={true} >
