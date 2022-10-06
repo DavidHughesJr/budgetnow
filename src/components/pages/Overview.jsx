@@ -29,12 +29,12 @@ const Overview = () => {
     return (
         <>
             <Title level={2}>Overview</Title>
+            {isShown && (
+                <BudgetInput />
+            )}
             <div className='layout'>
                 <Space direction='vertical'>
                     <Card className='card-medium' title="All Transactions" hoverable={true} extra={<Button onClick={handlePopup} type="primary" size="small"> <PlusOutlined /> </Button>}>
-                        {isShown && (
-                            <BudgetInput /> 
-                        )}
                         <List itemLayout="horizontal"
                             dataSource={transactions.slice(0, 2)}
                             renderItem={item => (
