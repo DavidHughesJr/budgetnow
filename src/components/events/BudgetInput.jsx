@@ -4,15 +4,21 @@ import {
   Input,
   Select,
   InputNumber,
-  Typography
+  Typography,
+  Space
 } from 'antd';
-import React from 'react';
+import React, { useState } from 'react';
 
-const App = () => {
- 
+const BudgetInput = ({isShown, setIsShown}) => {
+
+
+ const handleClose = event => {
+   setIsShown(current => !current)
+ }
+
 
   return (
-    <div>
+    <div style={{display: isShown? 'block' : 'none'}}>
       <Form className='popup-form'
         labelCol={{
           span: 5,
@@ -20,7 +26,9 @@ const App = () => {
         layout="horizontal"
         size={'small'}
       >
-        <Button> x </Button>
+        <div style={{display: 'flex'}}>
+          <Button onClick={handleClose} className='btn-form-close'> Close </Button>
+        </div> 
         <Typography>
           <pre> Add Transaction </pre> 
         </Typography>
@@ -46,4 +54,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default BudgetInput;

@@ -74,8 +74,11 @@
   background-color: #f0f2f5;
   border: 1px solid #F0F0F0;
   position: absolute;
-  width: 35%;
+  width: 30%;
   padding: 20px;
+}
+.btn-form-close {
+  margin-left: auto;
 }
 @media (min-width: 320px) {
   .layout {

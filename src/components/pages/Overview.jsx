@@ -25,12 +25,13 @@ const Overview = () => {
 
     
     console.log(transactions)
+ 
 
     return (
         <>
             <Title level={2}>Overview</Title>
             {isShown && (
-                <BudgetInput />
+                <BudgetInput isShown={isShown} setIsShown={setIsShown} />
             )}
             <div className='layout'>
                 <Space direction='vertical'>
