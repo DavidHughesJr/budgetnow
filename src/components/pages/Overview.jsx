@@ -1,26 +1,52 @@
 
-import { Card, Space, Calendar, Typography } from 'antd'
-import React, { useContext } from 'react'
-import { BudgetContext } from '../context/BudgetContext';
+import { Card, Space, Calendar, Typography, Button, List } from 'antd'
+import { PlusOutlined } from '@ant-design/icons';
+import BudgetInput from '../events/BudgetInput';
+import React, { useState, useContext } from 'react'
+import { BudgetContext } from '../../context/BudgetContext';
 
 
 const { Title, Text } = Typography;
-
-
 const Overview = () => {
+
+    const [isShown, setIsShown] = useState(false)
+
+    const handlePopup = event => {
+        setIsShown(true)
+    }
+
     const onPanelChange = (value, mode) => {
         console.log(value.format('YYYY-MM-DD'), mode);
     };
+    
 
     const { budget } = useContext(BudgetContext)
+    const { transactions } = useContext(BudgetContext)
+
+    
+    console.log(transactions)
 
     return (
         <>
             <Title level={2}>Overview</Title>
             <div className='layout'>
                 <Space direction='vertical'>
-                    <Card className='card-medium' title="All Transaction" hoverable={true}>
-                        <Text> {budget} </Text>
+                    <Card className='card-medium' title="All Transactions" hoverable={true} extra={<Button onClick={handlePopup} type="primary" size="small"> <PlusOutlined /> </Button>}>
+                        {isShown && (
+                            <BudgetInput /> 
+                        )}
+                        <List itemLayout="horizontal"
+                            dataSource={transactions.slice(0, 2)}
+                            renderItem={item => (
+                                <List.Item>
+                                    <List.Item.Meta
+                                        title={item.name}
+                                        description={item.category}
+                                    />
+                                    <div>${item.cost}</div>
+                                </List.Item>
+                            )}
+                        />
                     </Card>
                     <Card className='card-medium' title="Retirement" hoverable={true} >
                         <p>Card content</p>
@@ -39,7 +65,7 @@ const Overview = () => {
                         <p>Card content</p>
                         <p>Card content</p>
                     </Card>
-                    <Card className='card-small' title="Business" hoverable={true}>
+                    <Card className='card-small' title="Business" hoverable={true} >
                         <p>Card content</p>
                     </Card>
                 </Space>
