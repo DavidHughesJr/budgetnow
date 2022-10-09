@@ -80,6 +80,24 @@
 .btn-form-close {
   margin-left: auto;
 }
+.popup-background {
+  filter: blur(8px);
+  -webkit-filter: blur(8px);
+}
+.icons{
+  font-size: 15px;
+}
+.net-worth-overview {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  align-items: center;
+  text-align: center;
+}
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+}
 @media (min-width: 320px) {
   .layout {
     flex-wrap: wrap;

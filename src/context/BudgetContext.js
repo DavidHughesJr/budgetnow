@@ -1,13 +1,20 @@
 import { createContext, useReducer } from 'react'
-
+import uuid from 'react-uuid'
 
 const BudgetReducer = (state, action) => {
     switch (action.type) {
+        case 'ADD TRANSACTION':
+            return {
+                ...state,
+                transactions: [...state.transactions, action.payload]
+            }
         default: return state
     }
 }
 
+
 const initialState = {
+
     budget: [
         { name: 'income', amount: 6000 },
         { name: 'side hustle', amount: 500 }
@@ -24,28 +31,38 @@ const initialState = {
         { name: 'Other', cap: 100 },
     ],
     transactions: [
-        { id: 1, category: 'Groceries', name: 'Kroger', cost: 200 },
-        { id: 2, category: 'Transportation', name: 'Shell gas', cost: 50 },
-        { id: 3, category: 'Insurance', name: 'Blue cross insurance', cost: 250 },
-        { id: 4, category: 'Retirement', name: 'Roth IRA', cost: 500 },
-        { id: 5, category: 'Savings', name: 'Extra cash', cost: 100 },
-        { id: 6, category: 'Entertainment', name: 'Spotify', cost: 10 },
-    ]
+        { id: uuid(), name: 'Kroger', category: 'Groceries', cost: 200 },
+        { id: uuid(), name: 'Shell gas', category: 'Transportation', cost: 50 },
+        { id: uuid(), name: 'Blue cross insurance', category: 'Insurance', cost: 250 },
+        { id: uuid(), name: 'Roth IRA', category: 'Retirement', cost: 500 },
+        { id: uuid(), name: 'Extra cash', category: 'Savings', cost: 100 },
+        { id: uuid(), name: 'Spotify', category: 'Entertainment', cost: 10 },
+    ],
 }
+
+const totals = [
+    { budget: initialState.budget.reduce((acc, arr) => acc + arr.amount, 0) },
+    { categories: initialState.categories.reduce((acc, arr) => acc + arr.cap, 0) },
+    { transactions: initialState.transactions.reduce((acc, arr) => acc + arr.cost, 0) }
+]
 
 
 export const BudgetContext = createContext()
 
 const BudgetContextProvider = (props) => {
 
+
     const [state, dispatch] = useReducer(BudgetReducer, initialState)
+  
 
     return (
         <BudgetContext.Provider value={{
             budget: state.budget,
             categories: state.categories,
             transactions: state.transactions,
-            dispatch
+            totals: totals,
+            dispatch,
+           
         }}>{props.children}</BudgetContext.Provider>
     )
 }
