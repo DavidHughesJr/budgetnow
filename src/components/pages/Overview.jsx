@@ -19,6 +19,7 @@ const Overview = () => {
     };
 
     const { transactions } = useContext(BudgetContext)
+    const { categories } = useContext(BudgetContext)
     const { totals } = useContext(BudgetContext)
     const netWorth = [
         { icon: <CrownTwoTone />, amount: 10000, text: 'Worth' },
@@ -31,7 +32,7 @@ const Overview = () => {
         { text: 'Expenses', amount: totals[2].transactions },
         { text: 'Budgeted', amount: totals[1].categories },
     ]
-
+console.log(categories)
     return (
         <>
             <Title level={2}>Overview</Title>
@@ -70,8 +71,16 @@ const Overview = () => {
                                 }
                             </div>
                         </Card>
-                        <Card className='card-small' title="Categories" hoverable={true} >
-                            <p>Card content</p>
+                        <Card className='card-small' title="Top Categories" hoverable={true} >
+                            <List  itemLayout="horizontal"
+                                dataSource={categories.sort((a, b) => b.cap - a.cap).slice(0, 3)}
+                                renderItem={item => (
+                                    <List.Item style={{padding: 5}}>
+                                        <Text> {item.name}</Text>
+                                        <Text>${item.cap}</Text>
+                                    </List.Item>
+                                )}
+                            />
                         </Card>
                     </Space>
                     <Space direction='vertical'>
@@ -96,13 +105,13 @@ const Overview = () => {
                             <p>Card content</p>
                             <p>Card content</p>
                         </Card>
-                        <Card className='card-small' title="Business" hoverable={true} >
+                        <Card className='card-small' title="Investment" hoverable={true} >
                             <p>Card content</p>
                         </Card>
                     </Space>
                     <Space direction='vertical'>
                         <Calendar className='card-calendar' fullscreen={false} onPanelChange={onPanelChange} />
-                        <Card className='card-large' title="Investment" hoverable={true} >
+                        <Card className='card-large' title="Business" hoverable={true} >
                             <Text> Test </Text>
                         </Card>
                     </Space>
