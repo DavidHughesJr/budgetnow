@@ -19,11 +19,11 @@ const BudgetInput = ({ isShown, setIsShown }) => {
   const [category, setCategory] = useState('')
   const [cost, setCost] = useState('')
 
-  const handleClose = event => {
+  const handleClose = (event) => {
     setIsShown(current => !current)
   }
 
-  const handleSubmit = event => {
+  const handleSubmit = (event) => {
     event.preventDefault()
 
 

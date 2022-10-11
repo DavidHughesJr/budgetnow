@@ -61,7 +61,8 @@
   padding-bottom: 5px;
 }
 .search-bar {
-  width: 30%;
+  display: flex;
+  gap: 5px; 
   padding: 8px 0;
 }
 .popup-form {
@@ -97,6 +98,10 @@
 .flex-between {
   display: flex;
   justify-content: space-between;
+}
+.investment-form-tickers {
+  height: 200px;
+  overflow: scroll;
 }
 @media (min-width: 320px) {
   .layout {

@@ -1,7 +1,11 @@
 import { Card, Space } from 'antd'
-import React from 'react'
+import React, {useState, useEffect} from 'react'
+import { fetchMarketData } from '../../api/apiConfig'
 
 const Budget = () => {
+
+
+
   return (
     <>
       <h2> Budget </h2>
