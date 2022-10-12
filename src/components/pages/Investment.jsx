@@ -1,14 +1,15 @@
 import { Button, Card, Space } from 'antd'
-import React, { useState, useEffect } from 'react'
-
+import React, { useState, useContext } from 'react'
 import InvestmentForm from '../events/InvestmentForm'
+import { InvestmentContext } from '../../context/InvestmentContextProvider'
 
 const Investment = () => {
 
 
   const [isShown, setIsShown] = useState(false)
   
-
+  const { holdings } = useContext(InvestmentContext)
+ console.log(holdings)
 
   return (
     <>

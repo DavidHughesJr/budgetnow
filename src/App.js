@@ -3,12 +3,14 @@ import React from "react";
 import { Overview, Budget, Investment, Schedule } from './components/pages/allPages'
 import { Nav } from './components/layout/allLayout'
 import { Routes, Route } from "react-router-dom";
-import BudgetContextProvider from "./context/BudgetContext";
+import BudgetContextProvider from "./context/BudgetContextProvider";
+import InvestmentContextProvider from "./context/InvestmentContextProvider";
 
 const { Header, Content, Footer } = Layout;
 
 const App = () => (
   <BudgetContextProvider>
+    <InvestmentContextProvider>
     <Layout>
       <Nav />
       <Layout>
@@ -47,6 +49,7 @@ const App = () => (
         </Footer>
       </Layout>
     </Layout>
+    </InvestmentContextProvider>
   </BudgetContextProvider>
 );
 

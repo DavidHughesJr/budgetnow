@@ -100,7 +100,7 @@
   justify-content: space-between;
 }
 .investment-form-tickers {
-  height: 200px;
+  height: 250px;
   overflow: scroll;
 }
 @media (min-width: 320px) {
@@ -121,6 +121,9 @@
   .card-medium {
     width: 100%;
   }
+  .popup-form {
+    width: 80%;
+  }
 }
 @media (min-width: 768px) {
   .layout {
@@ -138,9 +141,15 @@
   .card-large {
     width: 300px;
   }
+  .popup-form {
+    width: 50%;
+  }
 }
 @media (min-width: 1200px) {
   .layout {
     flex-direction: row;
+  }
+  .popup-form {
+    width: 50%;
   }
 }

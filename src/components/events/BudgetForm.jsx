@@ -7,7 +7,7 @@ import {
   Typography,
 } from 'antd';
 import React, { useState, useContext } from 'react';
-import { BudgetContext } from '../../context/BudgetContext';
+import { BudgetContext } from '../../context/BudgetContextProvider';
 import uuid from 'react-uuid';
 
 const BudgetInput = ({ isShown, setIsShown }) => {

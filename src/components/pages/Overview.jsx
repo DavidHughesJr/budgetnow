@@ -3,7 +3,7 @@ import { Card, Space, Calendar, Typography, Button, List, Col, Row, Divider } fr
 import { PlusOutlined, CrownTwoTone, FireTwoTone, UpCircleTwoTone, DownCircleTwoTone } from '@ant-design/icons';
 import BudgetInput from '../events/BudgetForm';
 import React, { useState, useContext } from 'react'
-import { BudgetContext } from '../../context/BudgetContext';
+import { BudgetContext } from '../../context/BudgetContextProvider';
 
 
 const { Title } = Typography;
