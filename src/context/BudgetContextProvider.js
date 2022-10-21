@@ -17,7 +17,9 @@ const initialState = {
 
     budget: [
         { name: 'income', amount: 6000 },
-        { name: 'side hustle', amount: 500 }
+        { name: 'side hustle', amount: 500 },
+        { name: 'investment', amount: 1000 },
+        { retirement: 'retirement', amount: 2000 }
     ],
     categories: [
         { name: 'Groceries', cap: 1000 },
@@ -53,7 +55,7 @@ const BudgetContextProvider = (props) => {
 
 
     const [state, dispatch] = useReducer(BudgetReducer, initialState)
-  
+
 
     return (
         <BudgetContext.Provider value={{
@@ -62,7 +64,7 @@ const BudgetContextProvider = (props) => {
             transactions: state.transactions,
             totals: totals,
             dispatch,
-           
+
         }}>{props.children}</BudgetContext.Provider>
     )
 }

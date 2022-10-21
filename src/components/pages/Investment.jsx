@@ -7,9 +7,13 @@ const Investment = () => {
 
 
   const [isShown, setIsShown] = useState(false)
-  
+
   const { holdings } = useContext(InvestmentContext)
- console.log(holdings)
+  const { watchList } = useContext(InvestmentContext)
+
+  console.log(watchList)
+
+
 
   return (
     <>
@@ -21,21 +25,25 @@ const Investment = () => {
         <h2> Investments </h2>
         <div style={{ marginBottom: 8 }}>
           <Button onClick={() => setIsShown(true)} type='primary'> Add Stock </Button>
-          
+
         </div>
         <Space direction='vertical' style={{ width: '100%' }}>
           <Card className='card-wide' hoverable={true}>
             Money available
           </Card>
           <Card className='card-wide' hoverable={true}>
-            current holdings
+            {
+              holdings.map((item) => <div> {item.name} | {item.symbol} {item.shares} {item.avgPrice}</div>)
+            }
           </Card>
           <div className='investment-layout' >
             <Card className='card-xl' hoverable={true}>
               Stock Graph
             </Card>
             <Card className='card-large' hoverable={true}>
-              watchlist
+              {
+                watchList.map((item) => <div> {item.name} | {item.symbol} </div>)
+              }
             </Card>
           </div>
         </Space>

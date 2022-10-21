@@ -1,25 +1,34 @@
 import React from 'react'
 import { createContext, useReducer } from 'react'
+import uuid from 'react-uuid'
 
 
-const InvestmentReducer = (state, action) => {
+const HoldingsReducer = (state, action) => {
     switch (action.type) {
-        case 'ADD INVESTMENT':
+        case 'ADD HOLDINGS':
             return {
                 ...state,
-                transactions: [...state.investments, action.payload]
+                holdings: [...state.holdings, action.payload],
+            }
+        case 'ADD WATCHLIST':
+            return {
+                ...state,
+                watchList: [...state.watchList, action.payload],
             }
         default: return state
     }
-}
 
+}
 
 const initialState = {
     holdings: [
-        { name: 'Coca-Cola', symbol: 'KO' },
+        { id: uuid(), name: 'Coca-Cola', symbol: 'KO', shares: 10, avgPrice: 1.99 },
     ],
     watchList: [
-        { name: 'Apple', symbol: ' AAPL'}
+        { id: uuid(), name: 'Apple', symbol: ' AAPL' }
+    ],
+    retirement: [
+        { id: uuid(), name: 'Apple', symbol: ' AAPL' }
     ]
 }
 
@@ -27,16 +36,15 @@ export const InvestmentContext = createContext()
 
 const InvestmentContextProvider = (props) => {
 
-    const [state, dispatch] = useReducer(InvestmentReducer, initialState)
+    const [state, dispatch] = useReducer(HoldingsReducer, initialState)
 
-
-  return (
-      <InvestmentContext.Provider value={{
-          holdings: state.holdings,
-          watchList: state.watchList,
-          dispatch,
-      }}>{props.children}</InvestmentContext.Provider>
-  )
+    return (
+        <InvestmentContext.Provider value={{
+            holdings: state.holdings,
+            watchList: state.watchList,
+            dispatch,
+        }}>{props.children}</InvestmentContext.Provider>
+    )
 }
 
 export default InvestmentContextProvider
