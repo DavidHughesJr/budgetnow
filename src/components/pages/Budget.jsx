@@ -4,8 +4,6 @@ import { fetchMarketData } from '../../api/apiConfig'
 
 const Budget = () => {
 
-
-
   return (
     <>
       <h2> Budget </h2>

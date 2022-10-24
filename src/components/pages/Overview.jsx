@@ -2,8 +2,9 @@
 import { Card, Space, Calendar, Typography, Button, List, Col, Row, Divider } from 'antd'
 import { PlusOutlined, CrownTwoTone, FireTwoTone, UpCircleTwoTone, DownCircleTwoTone } from '@ant-design/icons';
 import BudgetInput from '../events/BudgetForm';
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { BudgetContext } from '../../context/BudgetContextProvider';
+import { InvestmentContext } from '../../context/InvestmentContextProvider';
 
 
 const { Title } = Typography;
@@ -17,22 +18,33 @@ const Overview = () => {
     const onPanelChange = (value, mode) => {
         console.log(value.format('YYYY-MM-DD'), mode);
     };
-
+    const { budget } = useContext(BudgetContext)
     const { transactions } = useContext(BudgetContext)
     const { categories } = useContext(BudgetContext)
-    const { totals } = useContext(BudgetContext)
-    const netWorth = [
-        { icon: <CrownTwoTone />, amount: 10000, text: 'Worth' },
-        { icon: <FireTwoTone />, amount: 10000, text: 'Debts' },
-        { icon: <UpCircleTwoTone />, amount: 10000, text: 'Monthly Earnings' },
-        { icon: <DownCircleTwoTone />, amount: 10000, text: 'Monthly Spend' },
+
+    const { holdings } = useContext(InvestmentContext)
+    const { retirement } = useContext(InvestmentContext)
+
+    const investmentTotal = holdings.reduce((acc, arr) => acc + arr.avgPrice, 0)
+    
+
+    const totals = [
+        { budget: budget.reduce((acc, arr) => acc + arr.amount, 0) },
+        { categories: categories.reduce((acc, arr) => acc + arr.cap, 0) },
+        { transactions: transactions.reduce((acc, arr) => acc + arr.cost, 0) }
     ]
-    const budget = [
+    const netWorth = [
+        { icon: <CrownTwoTone />, amount: (totals[0].budget) - totals[2].transactions, text: 'Worth' },
+        { icon: <FireTwoTone />, amount: 0, text: 'Debts' },
+        { icon: <UpCircleTwoTone />, amount: 10000, text: 'Monthly Earnings' },
+        { icon: <DownCircleTwoTone />, amount: totals[2].transactions, text: 'Monthly Spend' },
+    ]
+    const budgetOverview = [
         { text: 'Income', amount: totals[0].budget },
         { text: 'Expenses', amount: totals[2].transactions },
         { text: 'Budgeted', amount: totals[1].categories },
     ]
-console.log(categories)
+
     return (
         <>
             <Title level={2}>Overview</Title>
@@ -59,7 +71,7 @@ console.log(categories)
                         <Card className='card-medium' title="Budget" hoverable={true}>
                             <div>
                                 {
-                                    budget?.map(({ text, amount }) => (
+                                    budgetOverview?.map(({ text, amount }) => (
                                         <>
                                             <div className='flex-between'>
                                                 <Title level={5} style={{ margin: 10 }}> {text} </Title>
@@ -72,10 +84,10 @@ console.log(categories)
                             </div>
                         </Card>
                         <Card className='card-small' title="Top Categories" hoverable={true} >
-                            <List  itemLayout="horizontal"
+                            <List itemLayout="horizontal"
                                 dataSource={categories.sort((a, b) => b.cap - a.cap).slice(0, 3)}
                                 renderItem={item => (
-                                    <List.Item style={{padding: 5}}>
+                                    <List.Item style={{ padding: 5 }}>
                                         <Text> {item.name}</Text>
                                         <Text>${item.cap}</Text>
                                     </List.Item>
@@ -101,12 +113,17 @@ console.log(categories)
                                 }
                             </Row>
                         </Card>
-                        <Card className='card-medium' title="Retirement" hoverable={true}>
-                            <p>Card content</p>
-                            <p>Card content</p>
+                        <Card className='card-medium' title="Investment" hoverable={true}>
+                            <div className='flex-list'>
+                                {
+                                    holdings?.map((data) => <Text> {data.name} | {data.symbol} | {data.shares} Shares</Text>)
+                                }
+                            </div>
                         </Card>
-                        <Card className='card-small' title="Investment" hoverable={true} >
-                            <p>Card content</p>
+                        <Card className='card-small' title="Retirement" hoverable={true} >
+                            {
+                                retirement?.map((data) => <div>  <Text> {data.name} | {data.symbol} </Text> </div>)
+                            }
                         </Card>
                     </Space>
                     <Space direction='vertical'>

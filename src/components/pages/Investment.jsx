@@ -11,9 +11,6 @@ const Investment = () => {
   const { holdings } = useContext(InvestmentContext)
   const { watchList } = useContext(InvestmentContext)
 
-  console.log(watchList)
-
-
 
   return (
     <>

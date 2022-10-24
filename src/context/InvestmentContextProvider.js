@@ -15,20 +15,26 @@ const HoldingsReducer = (state, action) => {
                 ...state,
                 watchList: [...state.watchList, action.payload],
             }
+            case 'ADD RETIREMENT':
+                return {
+                    ...state,
+                    watchList: [...state.retirement, action.payload],
+                }
         default: return state
     }
-
 }
+
 
 const initialState = {
     holdings: [
-        { id: uuid(), name: 'Coca-Cola', symbol: 'KO', shares: 10, avgPrice: 1.99 },
+        { id: uuid(), name: 'Coca-Cola', symbol: 'AMD', shares: 10, avgPrice: 50.00 },
+        { id: uuid(), name: 'AMD Tech', symbol: 'KO', shares: 10, avgPrice: 30.00 },
     ],
     watchList: [
         { id: uuid(), name: 'Apple', symbol: ' AAPL' }
     ],
     retirement: [
-        { id: uuid(), name: 'Apple', symbol: ' AAPL' }
+        { id: uuid(), name: 'Fidelity 500 Index Fund', symbol: 'FXAIX' }
     ]
 }
 
@@ -42,6 +48,7 @@ const InvestmentContextProvider = (props) => {
         <InvestmentContext.Provider value={{
             holdings: state.holdings,
             watchList: state.watchList,
+            retirement: state.retirement,
             dispatch,
         }}>{props.children}</InvestmentContext.Provider>
     )

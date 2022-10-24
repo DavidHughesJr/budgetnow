@@ -1,6 +1,8 @@
 import { createContext, useReducer } from 'react'
 import uuid from 'react-uuid'
 
+
+
 const BudgetReducer = (state, action) => {
     switch (action.type) {
         case 'ADD TRANSACTION':
@@ -42,11 +44,7 @@ const initialState = {
     ],
 }
 
-const totals = [
-    { budget: initialState.budget.reduce((acc, arr) => acc + arr.amount, 0) },
-    { categories: initialState.categories.reduce((acc, arr) => acc + arr.cap, 0) },
-    { transactions: initialState.transactions.reduce((acc, arr) => acc + arr.cost, 0) }
-]
+
 
 
 export const BudgetContext = createContext()
@@ -55,6 +53,12 @@ const BudgetContextProvider = (props) => {
 
 
     const [state, dispatch] = useReducer(BudgetReducer, initialState)
+    
+    const totals = [
+        { budget: initialState.budget.reduce((acc, arr) => acc + arr.amount, 0) },
+        { categories: initialState.categories.reduce((acc, arr) => acc + arr.cap, 0) },
+        { transactions: initialState.transactions.reduce((acc, arr) => acc + arr.cost, 0) }
+    ]
 
 
     return (
