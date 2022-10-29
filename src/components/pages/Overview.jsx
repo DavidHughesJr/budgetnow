@@ -2,7 +2,7 @@
 import { Card, Space, Calendar, Typography, Button, List, Col, Row, Divider } from 'antd'
 import { PlusOutlined, CrownTwoTone, FireTwoTone, UpCircleTwoTone, DownCircleTwoTone } from '@ant-design/icons';
 import BudgetInput from '../events/BudgetForm';
-import React, { useState, useContext, useEffect } from 'react'
+import React, { useState, useContext } from 'react'
 import { BudgetContext } from '../../context/BudgetContextProvider';
 import { InvestmentContext } from '../../context/InvestmentContextProvider';
 
@@ -25,8 +25,8 @@ const Overview = () => {
     const { holdings } = useContext(InvestmentContext)
     const { retirement } = useContext(InvestmentContext)
 
-    const investmentTotal = holdings.reduce((acc, arr) => acc + arr.avgPrice, 0)
-    
+    // const investmentTotal = holdings.reduce((acc, arr) => acc + arr.avgPrice, 0)
+
 
     const totals = [
         { budget: budget.reduce((acc, arr) => acc + arr.amount, 0) },
@@ -69,19 +69,17 @@ const Overview = () => {
                             />
                         </Card>
                         <Card className='card-medium' title="Budget" hoverable={true}>
-                            <div>
-                                {
-                                    budgetOverview?.map(({ text, amount }) => (
-                                        <>
-                                            <div className='flex-between'>
-                                                <Title level={5} style={{ margin: 10 }}> {text} </Title>
-                                                <Title level={5} style={{ margin: 10 }}> ${amount} </Title>
-                                            </div>
-                                            <Divider style={{ margin: 0 }} />
-                                        </>
-                                    ))
-                                }
-                            </div>
+                            {
+                                budgetOverview?.map(({ text, amount }) => (
+                                    <>
+                                        <div className='flex-between'>
+                                            <Title level={5} style={{ margin: 10 }}> {text} </Title>
+                                            <Title level={5} style={{ margin: 10 }}> ${amount} </Title>
+                                        </div>
+                                        <Divider style={{ margin: 0 }} />
+                                    </>
+                                ))
+                            }
                         </Card>
                         <Card className='card-small' title="Top Categories" hoverable={true} >
                             <List itemLayout="horizontal"
@@ -115,20 +113,24 @@ const Overview = () => {
                         </Card>
                         <Card className='card-medium' title="Investment" hoverable={true}>
                             <div className='flex-list'>
-                                {
-                                    holdings?.map((data) => <Text> {data.name} | {data.symbol} | {data.shares} Shares</Text>)
-                                }
+                                <List
+                                    size="small"
+                                    dataSource={holdings}
+                                    renderItem={item => <List.Item>{item.name} | Shares: {item.shares}</List.Item>}
+                                />
                             </div>
                         </Card>
-                        <Card className='card-small' title="Retirement" hoverable={true} >
-                            {
-                                retirement?.map((data) => <div>  <Text> {data.name} | {data.symbol} </Text> </div>)
-                            }
+                        <Card className='card-small' title="Retirement" hoverable={true}>
+                            <List
+                                size="small"
+                                dataSource={retirement}
+                                renderItem={item => <List.Item>{item.name} | {item.symbol}</List.Item>}
+                            />
                         </Card>
                     </Space>
                     <Space direction='vertical'>
                         <Calendar className='card-calendar' fullscreen={false} onPanelChange={onPanelChange} />
-                        <Card className='card-large' title="Business" hoverable={true} >
+                        <Card className='card-large' title="Agenda" hoverable={true} >
                             <Text> Test </Text>
                         </Card>
                     </Space>
