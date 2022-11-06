@@ -49,6 +49,9 @@
   width: 100%;
   height: 150px;
 }
+.card-wide-mini {
+  height: 200px
+}
 .card-calendar {
   width: 300px;
   font-size: smaller;
@@ -130,13 +133,16 @@
   .investment-layout {
     flex-wrap: wrap;
   }
-  .card-large {
-    width: 100%;
-  }
   .card-small {
     width: 100%;
   }
   .card-medium {
+    width: 100%;
+  }
+  .card-large {
+    width: 100%;
+  }
+  .card-wide {
     width: 100%;
   }
   .popup-form {
