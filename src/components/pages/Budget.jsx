@@ -57,7 +57,7 @@ const Budget = () => {
           </Space>
         </Card>
         <Card>
-          <Button> Add Income</Button>
+          <Button> Add Income </Button>
         </Card>
       </Space>
 
