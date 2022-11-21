@@ -20,8 +20,11 @@ const Budget = () => {
 
   const budgetAndSavings = [
     { text: 'Your Total Income', title: `${totalIncome}`, subtitle1: 'Primary', subtitle1Text: `$${budget[0].amount}`, subtitle2: 'Secondary', subtitle2Text: `$${budget[1].amount}` },
-    { text: 'Your Total Income', title: `$0`, subtitle1: 'Contributions', subtitle1Text: `$0`, subtitle2: 'Withdrawals', subtitle2Text: `$0` },
+    { text: 'Your Total Savings', title: `$0`, subtitle1: 'Contributions', subtitle1Text: `$0`, subtitle2: 'Withdrawals', subtitle2Text: `$0` },
   ]
+
+  const totalBudget = categories.reduce((acc, arr) => acc + arr.cap,
+  0)
 
 
   return (
@@ -51,7 +54,7 @@ const Budget = () => {
           <Space>
             <Progress width='155px' type="circle" percent={75} format={amount => `$${budget[0].amount}`} />
             <div style={{ display: 'flex', flexDirection: 'column' }} >
-              <Title level={5}> Monthly Limit: $20000  </Title>
+              <Title level={5}> Monthly Limit: ${totalBudget}  </Title>
               <Title level={5}> Remaining:  $15000 </Title>
             </div>
           </Space>
