@@ -54,7 +54,7 @@ const Overview = () => {
                 )}
                 <div className={!isShown ? 'layout' : 'layout popup-background'}>
                     <Space direction='vertical'>
-                        <Card className='card-medium' title="All Transactions" hoverable={true} extra={<Button onClick={handlePopup} type="primary" size="small"> <PlusOutlined /> </Button>}>
+                        <Card className='card-medium' title="Latest Transactions" hoverable={true} extra={<Button onClick={handlePopup} type="primary" size="small"> <PlusOutlined /> </Button>}>
                             <List itemLayout="horizontal"
                                 dataSource={transactions.slice(transactions.length - 2).reverse()}
                                 renderItem={item => (
@@ -73,8 +73,10 @@ const Overview = () => {
                                 budgetOverview?.map(({ text, amount }) => (
                                     <>
                                         <div className='flex-between'>
-                                            <Title level={5} style={{ margin: 10 }}> {text} </Title>
-                                            <Title level={5} style={{ margin: 10 }}> ${amount} </Title>
+                                            <List.Item style={{ padding: 5 }}>
+                                                <Title level={5} style={{ margin: 10 }}> {text} </Title>
+                                                <Title level={5} style={{ margin: 10 }}> ${amount} </Title>
+                                            </List.Item>
                                         </div>
                                         <Divider style={{ margin: 0 }} />
                                     </>

@@ -24,7 +24,7 @@ const Budget = () => {
   ]
 
   const totalBudget = categories.reduce((acc, arr) => acc + arr.cap,
-  0)
+    0)
 
 
   return (
@@ -32,11 +32,11 @@ const Budget = () => {
       <Space direction='horizontal' align='' className='layout'>
         {
           budgetAndSavings?.map(({ text, title, subtitle1, subtitle1Text, subtitle2, subtitle2Text }) =>
-            <Card className='card-small' hoverable='true' style={{ width: '200px' }}>
+            <Card className='card-small' hoverable='true'>
               <div>
                 <Text> {text} </Text>
                 <Title style={{ margin: 21.5 }}>  {title} </Title>
-                <div style={{ width: '150px', flexDirection: 'column' }}>
+                <div>
                   <div className='flex-between' >
                     <Text> {subtitle1} </Text>
                     <Text> {subtitle1Text}</Text>
@@ -50,20 +50,30 @@ const Budget = () => {
             </Card>
           )
         }
-        <Card className='card-wide-mini' style={{ width: '400px', flexDirection: 'column' }} hoverable='true'>
+        <Card className='card-wide-mini' hoverable='true'>
           <Space>
             <Progress width='155px' type="circle" percent={75} format={amount => `$${budget[0].amount}`} />
-            <div style={{ display: 'flex', flexDirection: 'column' }} >
+            <div >
               <Title level={5}> Monthly Limit: ${totalBudget}  </Title>
               <Title level={5}> Remaining:  $15000 </Title>
             </div>
           </Space>
         </Card>
-        <Card>
+        <Card className='btn-center'>
           <Button> Add Income </Button>
         </Card>
       </Space>
-
+      <Space direction='horizontal'>
+        <Card className='card-large-3' title="Activities" hoverable={true}>
+          Activities
+        </Card>
+        <Card className='card-large-2' title="Transaction" hoverable={true}>
+          Transaction
+        </Card>
+        <Card className='card-large' title="Categories" hoverable={true}>
+          Categories
+        </Card>
+      </Space>
     </>
   )
 }
