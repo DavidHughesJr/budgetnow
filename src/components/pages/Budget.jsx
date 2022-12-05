@@ -29,10 +29,10 @@ const Budget = () => {
 
   return (
     <>
-      <Space direction='horizontal' align='' className='layout'>
+      <Space className='layout' direction='horizontal' align=''>
         {
           budgetAndSavings?.map(({ text, title, subtitle1, subtitle1Text, subtitle2, subtitle2Text }) =>
-            <Card className='card-small' hoverable='true'>
+            <Card className='card-small' hoverable='true' bordered='false'>
               <div>
                 <Text> {text} </Text>
                 <Title style={{ margin: 21.5 }}>  {title} </Title>
@@ -50,7 +50,7 @@ const Budget = () => {
             </Card>
           )
         }
-        <Card className='card-wide-mini' hoverable='true'>
+        <Card className='card-wide-mini' hoverable='true' >
           <Space>
             <Progress width='155px' type="circle" percent={75} format={amount => `$${budget[0].amount}`} />
             <div >
@@ -63,7 +63,7 @@ const Budget = () => {
           <Button> Add Income </Button>
         </Card>
       </Space>
-      <Space direction='horizontal'>
+      <Space  className='layout' direction='horizontal'>
         <Card className='card-large-3' title="Activities" hoverable={true}>
           Activities
         </Card>
