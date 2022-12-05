@@ -26,6 +26,11 @@
   display: flex;
   justify-content: space-between;
 }
+.layout-2 {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 40px;
+}
 .investment-layout {
   width: 100%;
   display: flex;
@@ -42,11 +47,11 @@
   height: 405px;
 }
 .card-large-2 {
-  width: 350px;
+  width: 100%;
   height: 405px;
 }
 .card-large-3 {
-  width: 490px;
+  width: 100%;
   height: 405px;
 }
 .card-xl {
@@ -58,7 +63,7 @@
   height: 150px;
 }
 .card-wide-mini {
-  height: 200px
+  height: 200px;
 }
 .card-calendar {
   width: 300px;
@@ -130,7 +135,6 @@
 .flex-list {
   display: flex;
   flex-direction: column;
-  
 }
 .btn-center {
   width: auto;
@@ -139,8 +143,31 @@
   width: 100%;
   height: 100%;
 }
+.no-border {
+  border: none;
+}
+.overflow-scroll {
+  overflow: scroll;
+  height: 300px;
+  overflow-x: hidden;
+}
+.overflow-scroll::-webkit-scrollbar {
+  width: 1px;
+}
+.overflow-scroll::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+.overflow-scroll::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
 @media (min-width: 320px) {
   .layout {
+    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .layout-2 {
     flex-wrap: wrap;
     flex-direction: column;
     gap: 8px;
@@ -155,6 +182,12 @@
     width: 100%;
   }
   .card-large {
+    width: 100%;
+  }
+  .card-large-2 {
+    width: 100%;
+  }
+  .card-large-3 {
     width: 100%;
   }
   .card-wide {
@@ -177,15 +210,24 @@
   .card-medium {
     width: 300px;
   }
-  .card-large {
-    width: 300px;
-  }
   .popup-form {
     width: 50%;
+  }
+   .card-large-1 {
+    width: 24%;
+  }
+  .card-large-2 {
+    width: 24%;
+  }
+  .card-large-3 {
+    width: 48%;
   }
 }
 @media (min-width: 1200px) {
   .layout {
+    flex-direction: row;
+  }
+  .layout-2 {
     flex-direction: row;
   }
   .popup-form {
