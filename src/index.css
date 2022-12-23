@@ -214,13 +214,13 @@
     width: 50%;
   }
    .card-large-1 {
-    width: 24%;
+    width: 100%;
   }
   .card-large-2 {
-    width: 24%;
+    width: 100%;
   }
   .card-large-3 {
-    width: 48%;
+    width: 100%;
   }
 }
 @media (min-width: 1200px) {
@@ -232,5 +232,14 @@
   }
   .popup-form {
     width: 50%;
+  }
+   .card-large-1 {
+    width: 24%;
+  }
+  .card-large-2 {
+    width: 24%;
+  }
+  .card-large-3 {
+    width: 48%;
   }
 }

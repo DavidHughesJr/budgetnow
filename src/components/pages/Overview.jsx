@@ -1,7 +1,7 @@
 
 import { Card, Space, Calendar, Typography, Button, List, Col, Row, Divider } from 'antd'
 import { PlusOutlined, CrownTwoTone, FireTwoTone, UpCircleTwoTone, DownCircleTwoTone } from '@ant-design/icons';
-import BudgetInput from '../events/BudgetForm';
+import BudgetForm from '../events/BudgetForm';
 import React, { useState, useContext } from 'react'
 import { BudgetContext } from '../../context/BudgetContextProvider';
 import { InvestmentContext } from '../../context/InvestmentContextProvider';
@@ -50,7 +50,7 @@ const Overview = () => {
             <Title level={2}>Overview</Title>
             <div>
                 {isShown && (
-                    <BudgetInput isShown={isShown} setIsShown={setIsShown} />
+                    <BudgetForm isShown={isShown} setIsShown={setIsShown} />
                 )}
                 <div className={!isShown ? 'layout' : 'layout popup-background'}>
                     <Space direction='vertical'>

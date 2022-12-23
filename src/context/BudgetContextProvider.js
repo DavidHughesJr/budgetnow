@@ -5,23 +5,43 @@ import uuid from 'react-uuid'
 
 const BudgetReducer = (state, action) => {
     switch (action.type) {
+        case 'ADD BUDGET':
+            return {
+                ...state,
+                budget: [...state.budget, action.payload].reduce((items, item) => {
+                    const { name, amount } = item;
+                    const itemIndex = items.findIndex(item => item.name === name)
+                    if (itemIndex === -1) {
+                        items.push(item);
+                    } else {
+                        items[itemIndex].amount += amount   
+                    }
+                    return items;
+                }, []),
+            }
         case 'ADD TRANSACTION':
             return {
                 ...state,
-                transactions: [...state.transactions, action.payload]
+                transactions: [...state.transactions, action.payload],
             }
+            
         default: return state
     }
 }
 
 
+
 const initialState = {
 
     budget: [
-        { name: 'income', amount: 6000 },
-        { name: 'side hustle', amount: 500 },
-        { name: 'investment', amount: 1000 },
-        { retirement: 'retirement', amount: 2000 }
+        { name: 'Income', amount: 6000 },
+        { name: 'Secondary Income', amount: 500 },
+        { name: 'Long Term Savings', amount: 1000 },
+        { name: 'Short Term Savings', amount: 200 },
+    ],
+    investment: [
+        { id: uuid(), name: 'investment', amount: 1000 },
+        { id: uuid(), name: 'retirement', amount: 2000 }
     ],
     categories: [
         { name: 'Groceries', cap: 1000 },
