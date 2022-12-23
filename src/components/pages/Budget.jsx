@@ -86,7 +86,6 @@ const Budget = () => {
       )}
       <div className={!isShown ? 'layout' : 'layout popup-background'}>
         <Space className='layout' direction='horizontal' align=''>
-          <div id='hair'> </div>
           {
             budgetAndSavings?.map(({ text, title, subtitle1, subtitle1Text, subtitle2, subtitle2Text }) =>
               <Card className='card-small no-border' bordered='false'>

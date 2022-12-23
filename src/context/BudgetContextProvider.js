@@ -16,7 +16,7 @@ const BudgetReducer = (state, action) => {
                     } else {
                         items[itemIndex].amount += amount   
                     }
-                    return items;
+                    return items
                 }, []),
             }
         case 'ADD TRANSACTION':

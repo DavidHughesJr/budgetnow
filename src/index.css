@@ -25,11 +25,13 @@
 .layout {
   display: flex;
   justify-content: space-between;
+  width: 100%
 }
 .layout-2 {
   display: flex;
   justify-content: space-between;
   margin-top: 40px;
+  width: 100%;
 }
 .investment-layout {
   width: 100%;
@@ -240,6 +242,6 @@
     width: 24%;
   }
   .card-large-3 {
-    width: 48%;
+    width: 50%;
   }
 }

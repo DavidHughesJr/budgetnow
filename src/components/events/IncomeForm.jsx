@@ -59,11 +59,7 @@ const IncomeForm = ({ isShown, setIsShown }) => {
         return items;
     }, []);
 
-    console.log(newList)
-
-    console.log(amount)
-
-
+ 
     return (
         <div style={{ display: isShown ? 'block' : 'none' }}>
             <Form className='popup-form'
@@ -77,7 +73,7 @@ const IncomeForm = ({ isShown, setIsShown }) => {
                     <Button onClick={handleClose} className='btn-form-close'> Close </Button>
                 </div>
                 <Typography>
-                    <pre> Add Transaction </pre>
+                    <pre> Add Income </pre>
                 </Typography>
                 <Form.Item label="Type">
                     <Select onChange={(e) => setName(e)}>
