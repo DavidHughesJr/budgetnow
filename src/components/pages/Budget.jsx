@@ -40,14 +40,18 @@ const Budget = () => {
   const { categories } = useContext(BudgetContext)
   const { transactions } = useContext(BudgetContext)
   const totalIncome = budget[0].amount + budget[1].amount
+  const totalSavings = budget[2].amount + budget[3].amount
 
   const budgetAndSavings = [
     { text: 'Your Total Income', title: `$${totalIncome}`, subtitle1: 'Primary', subtitle1Text: `$${budget[0].amount}`, subtitle2: 'Secondary', subtitle2Text: `$${budget[1].amount}` },
-    { text: 'Your Total Savings', title: `$0`, subtitle1: 'Contributions', subtitle1Text: `$0`, subtitle2: 'Withdrawals', subtitle2Text: `$0` },
+    { text: 'Your Total Savings', title: `$${totalSavings}`, subtitle1: 'Long Term', subtitle1Text: `$${budget[2].amount}`, subtitle2: 'Short Term', subtitle2Text: `$${budget[3].amount}` },
   ]
 
   const totalBudget = categories.reduce((acc, arr) => acc + arr.cap,
     0)
+
+    // put transactions here subtract transactions from total budget
+  const remainingBudget = totalBudget - 100
 
 
   const options = {
@@ -113,12 +117,12 @@ const Budget = () => {
               <Progress width='155px' type="circle" percent={75} format={amount => `$${budget[0].amount}`} />
               <div >
                 <Title level={5}> Monthly Limit: ${totalBudget}  </Title>
-                <Title level={5}> Remaining:  $15000 </Title>
+                <Title level={5}> Remaining:  ${remainingBudget} </Title>
               </div>
             </Space>
           </Card>
           <Card className='btn-center no-border'>
-            <Button onClick={handlePopup}> Add Income </Button>
+            <Button onClick={handlePopup}> Add Items </Button>
           </Card>
         </Space>
         <div className='layout-2' direction='horizontal'>

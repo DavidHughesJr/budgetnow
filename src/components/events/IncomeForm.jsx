@@ -8,7 +8,7 @@ import {
 } from 'antd';
 import React, { useState, useContext } from 'react';
 import { BudgetContext } from '../../context/BudgetContextProvider';
-import uuid from 'react-uuid';
+
 
 
 
@@ -73,7 +73,7 @@ const IncomeForm = ({ isShown, setIsShown }) => {
                     <Button onClick={handleClose} className='btn-form-close'> Close </Button>
                 </div>
                 <Typography>
-                    <pre> Add Income </pre>
+                    <pre> Add Income Or Savings </pre>
                 </Typography>
                 <Form.Item label="Type">
                     <Select onChange={(e) => setName(e)}>
