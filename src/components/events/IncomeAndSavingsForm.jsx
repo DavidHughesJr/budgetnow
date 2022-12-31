@@ -1,7 +1,6 @@
 import {
     Button,
     Form,
-    Input,
     Select,
     InputNumber,
     Typography,
@@ -12,7 +11,7 @@ import { BudgetContext } from '../../context/BudgetContextProvider';
 
 
 
-const IncomeForm = ({ isShown, setIsShown }) => {
+const IncomeForm = ({ isShown, setIsShown, setIsItem }) => {
 
     const { budget } = useContext(BudgetContext)
     const { dispatch } = useContext(BudgetContext)
@@ -24,6 +23,7 @@ const IncomeForm = ({ isShown, setIsShown }) => {
 
     const handleClose = (event) => {
         setIsShown(current => !current)
+        setIsItem(current => !current)
     }
 
     const handleSubmit = (event) => {
@@ -38,27 +38,9 @@ const IncomeForm = ({ isShown, setIsShown }) => {
             payload: budget,
         })
         setIsShown(current => !current)
+        setIsItem(current => !current)
     }
-    const tester = [
-        { name: 'Income', amount: 6000 },
-        { name: 'Income', amount: 1000 },
-        { name: 'Secondary Income', amount: 500 },
-        { name: 'Long Term Savings', amount: 1000 },
-        { name: 'Short Term Savings', amount: 200 },
-    ]
-
-    const newList = tester.reduce((items, item) => {
-        const { name, amount } = item;
-        const itemIndex = items.findIndex(item => item.name === name)
-        if (itemIndex === -1) {
-            items.push(item);
-        } else {
-            items[itemIndex].amount += amount;
-        }
-
-        return items;
-    }, []);
-
+ 
  
     return (
         <div style={{ display: isShown ? 'block' : 'none' }}>

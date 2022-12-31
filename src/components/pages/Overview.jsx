@@ -1,7 +1,7 @@
 
 import { Card, Space, Calendar, Typography, Button, List, Col, Row, Divider } from 'antd'
 import { PlusOutlined, CrownTwoTone, FireTwoTone, UpCircleTwoTone, DownCircleTwoTone } from '@ant-design/icons';
-import BudgetForm from '../events/BudgetForm';
+import TransactionForm from '../events/TransactionForm';
 import React, { useState, useContext } from 'react'
 import { BudgetContext } from '../../context/BudgetContextProvider';
 import { InvestmentContext } from '../../context/InvestmentContextProvider';
@@ -30,7 +30,7 @@ const Overview = () => {
 
     const totals = [
         { budget: budget.reduce((acc, arr) => acc + arr.amount, 0) },
-        { categories: categories.reduce((acc, arr) => acc + arr.cap, 0) },
+        { categories: categories.reduce((acc, arr) => acc + arr.limit, 0) },
         { transactions: transactions.reduce((acc, arr) => acc + arr.cost, 0) }
     ]
     const netWorth = [
@@ -50,7 +50,7 @@ const Overview = () => {
             <Title level={2}>Overview</Title>
             <div>
                 {isShown && (
-                    <BudgetForm isShown={isShown} setIsShown={setIsShown} />
+                    <TransactionForm isShown={isShown} setIsShown={setIsShown} />
                 )}
                 <div className={!isShown ? 'layout' : 'layout popup-background'}>
                     <Space direction='vertical'>
@@ -85,11 +85,11 @@ const Overview = () => {
                         </Card>
                         <Card className='card-small' title="Top Categories" hoverable={true} >
                             <List itemLayout="horizontal"
-                                dataSource={categories.sort((a, b) => b.cap - a.cap).slice(0, 3)}
+                                dataSource={categories.sort((a, b) => b.limit - a.limit).slice(0, 3)}
                                 renderItem={item => (
                                     <List.Item style={{ padding: 5 }}>
                                         <Text> {item.name}</Text>
-                                        <Text>${item.cap}</Text>
+                                        <Text>${item.limit}</Text>
                                     </List.Item>
                                 )}
                             />

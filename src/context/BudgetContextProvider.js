@@ -24,11 +24,15 @@ const BudgetReducer = (state, action) => {
                 ...state,
                 transactions: [...state.transactions, action.payload],
             }
+        case 'ADD CATEGORY':
+            return {
+                ...state,
+                categories: [...state.categories, action.payload],
+            }
             
         default: return state
     }
 }
-
 
 
 const initialState = {
@@ -44,15 +48,15 @@ const initialState = {
         { id: uuid(), name: 'retirement', amount: 2000 }
     ],
     categories: [
-        { name: 'Groceries', cap: 1000 },
-        { name: 'Utilities', cap: 1000 },
-        { name: 'Transportation', cap: 500 },
-        { name: 'Medical', cap: 500 },
-        { name: 'Retirement', cap: 500 },
-        { name: 'Savings', cap: 100 },
-        { name: 'Investments', cap: 100 },
-        { name: 'Entertainment', cap: 100 },
-        { name: 'Other', cap: 100 },
+        { name: 'Groceries', limit: 1000 },
+        { name: 'Utilities', limit: 1000 },
+        { name: 'Transportation', limit: 500 },
+        { name: 'Medical', limit: 500 },
+        { name: 'Retirement', limit: 500 },
+        { name: 'Savings', limit: 100 },
+        { name: 'Investments', limit: 100 },
+        { name: 'Entertainment', limit: 100 },
+        { name: 'Other', limit: 100 },
     ],
     transactions: [
         { id: uuid(), name: 'Kroger', category: 'Groceries', cost: 200 },
@@ -76,7 +80,7 @@ const BudgetContextProvider = (props) => {
     
     const totals = [
         { budget: initialState.budget.reduce((acc, arr) => acc + arr.amount, 0) },
-        { categories: initialState.categories.reduce((acc, arr) => acc + arr.cap, 0) },
+        { categories: initialState.categories.reduce((acc, arr) => acc + arr.limit, 0) },
         { transactions: initialState.transactions.reduce((acc, arr) => acc + arr.cost, 0) }
     ]
 

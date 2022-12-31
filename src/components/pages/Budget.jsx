@@ -1,6 +1,9 @@
-import { Card, Space, Typography, Progress, Button, Divider, Select } from 'antd'
-import React, { useContext, useState } from 'react'
-import IncomeForm from '../events/IncomeForm';
+import { Card, Space, Typography, Progress, Button, List } from 'antd'
+import { PlusOutlined } from '@ant-design/icons';
+import React, { useContext, useState, useEffect } from 'react'
+import IncomeForm from '../events/IncomeAndSavingsForm';
+import TransactionForm from '../events/TransactionForm';
+import CategoryForm from '../events/CategoryForm';
 import { BudgetContext } from '../../context/BudgetContextProvider'
 import { InvestmentContext } from '../../context/InvestmentContextProvider';
 import {
@@ -47,11 +50,9 @@ const Budget = () => {
     { text: 'Your Total Savings', title: `$${totalSavings}`, subtitle1: 'Long Term', subtitle1Text: `$${budget[2].amount}`, subtitle2: 'Short Term', subtitle2Text: `$${budget[3].amount}` },
   ]
 
-  const totalBudget = categories.reduce((acc, arr) => acc + arr.cap,
-    0)
-
-    // put transactions here subtract transactions from total budget
-  const remainingBudget = totalBudget - 100
+  const totalCategorized = categories.reduce((acc, arr) => acc + arr.limit, 0)
+  const totalTransactions = transactions.reduce((acc, arr) => acc + arr.cost, 0)
+  const percentOnBudget = Math.floor(totalTransactions / totalCategorized * 100)
 
 
   const options = {
@@ -64,12 +65,27 @@ const Budget = () => {
     }
   }
 
+  const [transactionsAdded, setIsTransactionAdded] = useState([])
+
+ useEffect(() => {
+   const transactionsAdded = [...transactions].reduce((items, item) => {
+     const { category, cost } = item;
+     const itemIndex = items.findIndex(item => item.category === category)
+     if (itemIndex === -1) {
+       items.push(item);
+     } else {
+       items[itemIndex].cost += cost
+     }
+     return items
+   }, [])
+  setIsTransactionAdded(transactionsAdded)
+ },[transactions])
+  
   const data = {
-    labels: ["Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"],
+    labels: transactionsAdded.map(item => item.category),
     datasets: [
       {
-
-        data: [33, 53, 85, 41, 44, 65],
+        data: [...transactionsAdded.map(item => item.cost)],
         fill: true,
         backgroundColor: "RGB(24, 144, 255, 0.2)",
         borderColor: "RGB(24, 144, 255)"
@@ -77,16 +93,42 @@ const Budget = () => {
     ]
   };
 
+   
+  console.log(transactionsAdded)
+
+
+
+
+
   const [isShown, setIsShown] = useState(false)
-  const handlePopup = event => {
+  const [isItem, setIsItem] = useState(false)
+  const [isTransaction, setIsTransaction] = useState(false)
+  const [isCategory, setIsCategory] = useState(false)
+
+  const handleAddItemsPopup = event => {
     setIsShown(true)
+    setIsItem(true)
+  }
+  const handleTransactionsPopup = event => {
+    setIsShown(true)
+    setIsTransaction(true)
+  }
+  const handleCategoriesPopup = event => {
+    setIsShown(true)
+    setIsCategory(true)
   }
 
 
   return (
     <div>
-      {isShown && (
-        <IncomeForm isShown={isShown} setIsShown={setIsShown} />
+      {isShown && isItem && (
+        <IncomeForm isShown={isShown} setIsShown={setIsShown} setIsItem={setIsItem} />
+      )}
+      {isShown && isTransaction && (
+        <TransactionForm isShown={isShown} setIsShown={setIsShown} setIsTransaction={setIsTransaction} />
+      )}
+      {isShown && isCategory && (
+        <CategoryForm isShown={isShown} setIsShown={setIsShown} setIsCategory={setIsCategory} />
       )}
       <div className={!isShown ? 'layout' : 'layout popup-background'}>
         <Space className='layout' direction='horizontal' align=''>
@@ -114,57 +156,58 @@ const Budget = () => {
           }
           <Card className='card-wide-mini no-border' >
             <Space>
-              <Progress width='155px' type="circle" percent={75} format={amount => `$${budget[0].amount}`} />
+              {
+                <Progress width='155px' type="circle" percent={percentOnBudget} format={amount => percentOnBudget === '100' ? <h1 style={{ color: 'red' }}> ${totalIncome} </h1> : <h1> ${totalIncome} </h1>}
+                  strokeColor={percentOnBudget === '100' ? 'red' : '#1890FF'} />
+              }
+
               <div >
-                <Title level={5}> Monthly Limit: ${totalBudget}  </Title>
-                <Title level={5}> Remaining:  ${remainingBudget} </Title>
+                <Title level={5}> Remaining:  ${totalCategorized - totalTransactions} </Title>
+                <Title level={5}> Categorized: ${totalCategorized}  </Title>
               </div>
             </Space>
           </Card>
           <Card className='btn-center no-border'>
-            <Button onClick={handlePopup}> Add Items </Button>
+            <Button onClick={handleAddItemsPopup}> Add Items </Button>
           </Card>
         </Space>
         <div className='layout-2' direction='horizontal'>
           <Card className='card-large-3 no-fill' title="Activities" hoverable={true} extra={
-            <Select defaultValue="week">
-              <Select.Option value="week">Week</Select.Option>
-              <Select.Option value="month">Month</Select.Option>
-            </Select>
+            <h3> Chart </h3>
           }>
             <div style={{ height: '300px' }}>
               <Line height="100%" width="100%" options={options} data={data} />
             </div>
           </Card>
-          <Card className='card-large-2' title="Transaction" hoverable={true}>
+          <Card className='card-large-2' title="Transaction" hoverable={true} extra={<Button onClick={handleTransactionsPopup} type="primary" size="small"> <PlusOutlined /> </Button>}>
             <div className='overflow-scroll'>
-              {
-                transactions.map((items) => (
-                  <>
-                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                      <div>
-                        <Title level={5}> {items.name} </Title>
-                        <Text style={{ color: '#001529' }}> {items.category}</Text>
-                      </div>
-                      <Paragraph style={{ color: '#1890FF', marginRight: '10px' }}> Amount: {items.cost}</Paragraph>
-                    </div>
-                    <Divider />
-                  </>
-                ))
-              }
+              <List itemLayout="horizontal"
+                dataSource={transactions.slice().reverse()}
+                renderItem={item => (
+                  <List.Item>
+                    <List.Item.Meta
+                      title={<Title level={5}> {item.name} </Title>}
+                      description={<Text style={{ color: '#001529' }}> {item.category}</Text>}
+                    />
+                    <Paragraph style={{ color: '#1890FF', marginRight: '10px' }}> ${item.cost}</Paragraph>
+                  </List.Item>
+                )}
+              />
             </div>
           </Card>
-          <Card className='card-large-1' title="Categories" hoverable={true}>
+          <Card className='card-large-1' title="Categories" hoverable={true} extra={<Button onClick={handleCategoriesPopup} type="primary" size="small"> <PlusOutlined /> </Button>}>
             <div className='overflow-scroll'>
-              {
-                categories.map((items) => (
-                  <>
-                    <Title level={5}> {items.name} </Title>
-                    <Text style={{ color: '#1890FF' }}> Limit: {items.cap}</Text>
-                    <Divider />
-                  </>
-                ))
-              }
+              <List itemLayout="horizontal"
+                dataSource={categories.sort((a, b) => b.limit - a.limit)}
+                renderItem={item => (
+                  <List.Item>
+                    <List.Item.Meta
+                      title={<Title level={5}> {item.name} </Title>}
+                      description={<Text style={{ color: '#1890FF' }}> Limit: ${item.limit}</Text>}
+                    />
+                  </List.Item>
+                )}
+              />
             </div>
           </Card>
         </div>

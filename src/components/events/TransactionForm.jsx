@@ -10,7 +10,7 @@ import React, { useState, useContext } from 'react';
 import { BudgetContext } from '../../context/BudgetContextProvider';
 import uuid from 'react-uuid';
 
-const BudgetForm = ({ isShown, setIsShown }) => {
+const TransactionForm = ({ isShown, setIsShown, setIsTransaction }) => {
 
   const { categories } = useContext(BudgetContext)
   const { dispatch } = useContext(BudgetContext)
@@ -21,6 +21,7 @@ const BudgetForm = ({ isShown, setIsShown }) => {
 
   const handleClose = (event) => {
     setIsShown(current => !current)
+    setIsTransaction(current => !current)
   }
 
   const handleSubmit = (event) => {
@@ -39,6 +40,7 @@ const BudgetForm = ({ isShown, setIsShown }) => {
       payload: transactions,
     })
     setIsShown(current => !current)
+    setIsTransaction(current => !current)
   }
 
 
@@ -81,4 +83,4 @@ const BudgetForm = ({ isShown, setIsShown }) => {
   );
 };
 
-export default BudgetForm;
+export default TransactionForm;
