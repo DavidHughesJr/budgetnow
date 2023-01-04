@@ -29,21 +29,25 @@ const Overview = () => {
 
 
     const totals = [
-        { budget: budget.reduce((acc, arr) => acc + arr.amount, 0) },
+        { budget: budget[0].amount + budget[1].amount },
+        { savings: budget[2].amount + budget[3].amount },
         { categories: categories.reduce((acc, arr) => acc + arr.limit, 0) },
         { transactions: transactions.reduce((acc, arr) => acc + arr.cost, 0) }
     ]
     const netWorth = [
-        { icon: <CrownTwoTone />, amount: (totals[0].budget) - totals[2].transactions, text: 'Worth' },
+        { icon: <CrownTwoTone />, amount: (totals[0].budget) - totals[3].transactions, text: 'Worth' },
         { icon: <FireTwoTone />, amount: 0, text: 'Debts' },
-        { icon: <UpCircleTwoTone />, amount: 10000, text: 'Monthly Earnings' },
-        { icon: <DownCircleTwoTone />, amount: totals[2].transactions, text: 'Monthly Spend' },
+        { icon: <UpCircleTwoTone />, amount: totals[0].budget, text: 'Monthly Earnings' },
+        { icon: <DownCircleTwoTone />, amount: totals[3].transactions, text: 'Monthly Spend' },
     ]
     const budgetOverview = [
         { text: 'Income', amount: totals[0].budget },
-        { text: 'Expenses', amount: totals[2].transactions },
-        { text: 'Budgeted', amount: totals[1].categories },
+        { text: 'Savings', amount: totals[1].savings },
+        { text: 'Expenses', amount: totals[3].transactions },
+        { text: 'Budgeted', amount: totals[2].categories },
     ]
+
+  
 
     return (
         <>
@@ -56,10 +60,10 @@ const Overview = () => {
                     <Space direction='vertical'>
                         <Card className='card-medium' title="Latest Transactions" hoverable={true} extra={<Button onClick={handlePopup} type="primary" size="small"> <PlusOutlined /> </Button>}>
                             <List itemLayout="horizontal"
-                                dataSource={transactions.slice(transactions.length - 2).reverse()}
+                                dataSource={transactions.slice(transactions.length - 3).reverse()}
                                 renderItem={item => (
-                                    <List.Item>
-                                        <List.Item.Meta
+                                    <List.Item style={{padding: 2}}>
+                                        <List.Item.Meta 
                                             title={item.name}
                                             description={item.category}
                                         />
@@ -69,19 +73,15 @@ const Overview = () => {
                             />
                         </Card>
                         <Card className='card-medium' title="Budget" hoverable={true}>
-                            {
-                                budgetOverview?.map(({ text, amount }) => (
-                                    <>
-                                        <div className='flex-between'>
-                                            <List.Item style={{ padding: 5 }}>
-                                                <Title level={5} style={{ margin: 10 }}> {text} </Title>
-                                                <Title level={5} style={{ margin: 10 }}> ${amount} </Title>
-                                            </List.Item>
-                                        </div>
-                                        <Divider style={{ margin: 0 }} />
-                                    </>
-                                ))
-                            }
+                        <List itemLayout="horizontal"
+                                dataSource={budgetOverview}
+                                renderItem={({text, amount}) => (
+                                    <List.Item style={{ padding: 5 }}>
+                                        <Text> {text}</Text>
+                                        <Text> ${amount}</Text>
+                                    </List.Item>
+                                )}
+                            />
                         </Card>
                         <Card className='card-small' title="Top Categories" hoverable={true} >
                             <List itemLayout="horizontal"
@@ -104,7 +104,7 @@ const Overview = () => {
                                             <div className='net-worth-overview'>
                                                 {icon}
                                                 <div>
-                                                    <Title level={5} style={{ margin: 0 }}> {amount} </Title>
+                                                    <Title level={5} style={{ margin: 0 }}> ${amount} </Title>
                                                     <Text type='secondary'> {text}  </Text>
                                                 </div>
                                             </div>
