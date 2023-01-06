@@ -36,11 +36,10 @@ const Investment = () => {
         <h2> Investments </h2>
         <div style={{ marginBottom: 8 }}>
           <Button onClick={() => setIsShown(true)} type='primary'> Add Stock </Button>
-
         </div>
-        <Space direction='vertical' style={{ width: '100%' }}>
+        <Space direction='vertical' style={{ width: '100%'}}>
           <Card className='card-wide' hoverable={true}>
-            <Space>
+            <Space className='flex-between'>
               <div>
                 <Title level={5}> Total Investment Value </Title>
                 <Title style={{margin: 0}}> ${holdingsAmount} </Title>
