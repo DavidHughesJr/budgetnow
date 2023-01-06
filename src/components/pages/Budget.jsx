@@ -94,11 +94,6 @@ const Budget = () => {
   };
 
    
-  console.log(transactionsAdded)
-
-
-
-
 
   const [isShown, setIsShown] = useState(false)
   const [isItem, setIsItem] = useState(false)

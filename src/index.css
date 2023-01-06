@@ -162,6 +162,9 @@
 .overflow-scroll::-webkit-scrollbar-thumb {
   background: #888;
 }
+.swiper-pagination-bullets {
+  bottom: 0 !important;
+}
 
 @media (min-width: 320px) {
   .layout {

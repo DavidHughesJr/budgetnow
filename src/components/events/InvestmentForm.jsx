@@ -81,8 +81,6 @@ const InvestmentForm = ({ isShown, setIsShown }) => {
         setIsShown(current => !current)
     }
 
-    console.log(holdings)
-
 
     return (
         <div>

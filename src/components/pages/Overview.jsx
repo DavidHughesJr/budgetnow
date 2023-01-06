@@ -1,5 +1,5 @@
 
-import { Card, Space, Calendar, Typography, Button, List, Col, Row, Divider } from 'antd'
+import { Card, Space, Calendar, Typography, Button, List, Col, Row } from 'antd'
 import { PlusOutlined, CrownTwoTone, FireTwoTone, UpCircleTwoTone, DownCircleTwoTone } from '@ant-design/icons';
 import TransactionForm from '../events/TransactionForm';
 import React, { useState, useContext } from 'react'
@@ -24,9 +24,6 @@ const Overview = () => {
 
     const { holdings } = useContext(InvestmentContext)
     const { retirement } = useContext(InvestmentContext)
-
-    // const investmentTotal = holdings.reduce((acc, arr) => acc + arr.avgPrice, 0)
-
 
     const totals = [
         { budget: budget[0].amount + budget[1].amount },
@@ -117,7 +114,7 @@ const Overview = () => {
                             <div className='flex-list'>
                                 <List
                                     size="small"
-                                    dataSource={holdings}
+                                    dataSource={holdings.slice(0, 4)}
                                     renderItem={item => <List.Item>{item.name} | Shares: {item.shares}</List.Item>}
                                 />
                             </div>
@@ -125,7 +122,7 @@ const Overview = () => {
                         <Card className='card-small' title="Retirement" hoverable={true}>
                             <List
                                 size="small"
-                                dataSource={retirement}
+                                dataSource={retirement.slice(0, 4)}
                                 renderItem={item => <List.Item>{item.name} | {item.symbol}</List.Item>}
                             />
                         </Card>
