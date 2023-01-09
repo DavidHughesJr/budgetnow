@@ -10,7 +10,6 @@ import { BudgetContext } from '../../context/BudgetContextProvider';
 
 const CategoryForm = ({ isShown, setIsShown, setIsCategory }) => {
 
-    const { categories } = useContext(BudgetContext)
     const { dispatch } = useContext(BudgetContext)
 
     const [name, setName] = useState('')

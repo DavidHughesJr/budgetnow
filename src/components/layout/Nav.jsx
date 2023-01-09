@@ -1,7 +1,7 @@
 
 import { Layout, Menu } from 'antd';
 import React from 'react'
-import { CalendarOutlined, UserOutlined, StockOutlined, DollarOutlined } from '@ant-design/icons';
+import { UserOutlined, StockOutlined, DollarOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 
 const { Sider } = Layout;
@@ -24,9 +24,6 @@ const Nav = () => {
                         </Menu.Item>
                         <Menu.Item icon={<StockOutlined />}>
                             <Link to='/investment'> Investment </Link>
-                        </Menu.Item>
-                        <Menu.Item icon={<CalendarOutlined />}>
-                            <Link to='/schedule'> Schedule </Link>
                         </Menu.Item>
                     </Menu>
         </Sider>

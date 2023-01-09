@@ -28,9 +28,9 @@ const HoldingsReducer = (state, action) => {
 const initialState = {
     holdings: [
         { id: uuid(), name: 'Coca-Cola', symbol: 'AMD', shares: 10, avgPrice: 50.00 },
-        { id: uuid(), name: 'AMD Tech', symbol: 'KO', shares: 10, avgPrice: 30.00 },
+        { id: uuid(), name: 'AMD Tech', symbol: 'KO', shares: 6, avgPrice: 30.00 },
         { id: uuid(), name: 'Coca-Cola', symbol: 'AMD', shares: 10, avgPrice: 50.00 },
-        { id: uuid(), name: 'AMD Tech', symbol: 'KO', shares: 10, avgPrice: 30.00 },
+        { id: uuid(), name: 'AMD Tech', symbol: 'KO', shares: 7, avgPrice: 30.00 },
         { id: uuid(), name: 'Coca-Cola', symbol: 'AMD', shares: 10, avgPrice: 50.00 },
         { id: uuid(), name: 'AMD Tech', symbol: 'KO', shares: 10, avgPrice: 30.00 },
         { id: uuid(), name: 'Coca-Cola', symbol: 'AMD', shares: 10, avgPrice: 50.00 },
@@ -39,11 +39,15 @@ const initialState = {
         { id: uuid(), name: 'AMD Tech', symbol: 'KO', shares: 10, avgPrice: 30.00 },
     ],
     watchList: [
-        { id: uuid(), name: 'Apple', symbol: ' AAPL' }
+        { id: uuid(), name: 'Apple', symbol: ' AAPL' },
+        { id: uuid(), name: 'Apple', symbol: ' AAPL' },
+        { id: uuid(), name: 'Apple', symbol: ' AAPL' },
+        { id: uuid(), name: 'Apple', symbol: ' AAPL' },
+        { id: uuid(), name: 'Apple', symbol: ' AAPL' },
+        { id: uuid(), name: 'Apple', symbol: ' AAPL' },
+        { id: uuid(), name: 'Apple', symbol: ' AAPL' },
+        { id: uuid(), name: 'Apple', symbol: ' AAPL' },
     ],
-    retirement: [
-        { id: uuid(), name: 'Fidelity 500 Index Fund', symbol: 'FXAIX' }
-    ]
 }
 
 export const InvestmentContext = createContext()

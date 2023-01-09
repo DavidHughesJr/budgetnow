@@ -1,4 +1,4 @@
-import { Button, Card, Space, Typography } from 'antd'
+import { Button, Card, Space, Typography, List } from 'antd'
 import React, { useState, useContext } from 'react'
 import InvestmentForm from '../events/InvestmentForm'
 import { InvestmentContext } from '../../context/InvestmentContextProvider'
@@ -11,19 +11,17 @@ import 'swiper/css/pagination';
 
 const Investment = () => {
 
-
   const { Title } = Typography
   const { Text } = Typography
-
 
   const [isShown, setIsShown] = useState(false)
 
   const { holdings } = useContext(InvestmentContext)
   const { watchList } = useContext(InvestmentContext)
   
-
-
-  const holdingsAmount = holdings.reduce((acc, arr) => acc + arr.avgPrice * arr.shares, 0)
+  const totalInvestmentAmount = holdings.reduce((acc, arr) => acc + arr.avgPrice * arr.shares, 0)
+  const totalShares = holdings.reduce((acc, arr) => acc + arr.shares, 0)
+  const avgPricePer = holdings.reduce((acc, arr) => (acc + arr.avgPrice * arr.shares) / (acc + arr.shares), 0).toFixed(2)
 
 
   return (
@@ -42,15 +40,15 @@ const Investment = () => {
             <Space className='flex-between'>
               <div>
                 <Title level={5}> Total Investment Value </Title>
-                <Title style={{margin: 0}}> ${holdingsAmount} </Title>
+                <Title style={{margin: 0}}> ${totalInvestmentAmount} </Title>
               </div>
               <div>
-                <Title level={5}> Total Share Amount </Title>
-                <Title style={{ margin: 0 }}> ${holdingsAmount} </Title>
+                <Title level={5}> Total Shares </Title>
+                <Title style={{ margin: 0 }}> {totalShares} </Title>
               </div>
               <div>
-                <Title level={5}> Average Price Per All Shares </Title>
-                <Title style={{ margin: 0 }}> ${holdingsAmount} </Title>
+                <Title level={5}> Average Price Per Share </Title>
+                <Title style={{ margin: 0 }}> ${avgPricePer} </Title>
               </div>
             </Space>
           </Card>
@@ -75,10 +73,10 @@ const Investment = () => {
             >
             {
               holdings.map((item) =>
-              <SwiperSlide> 
+              <SwiperSlide key={item.name}> 
                 <Card hoverable={true} title={item.name}>
-                  <p> Shares: {item.shares} </p>
-                  <p> Average Price: ${item.avgPrice} </p>
+                  <Text> Shares: {item.shares} </Text>
+                  <Text> Average Price: ${item.avgPrice} </Text>
                   </Card>
                 </SwiperSlide>
               )
@@ -86,13 +84,18 @@ const Investment = () => {
             </Swiper>
           </div>
           <div className='investment-layout' >
-            <Card className='card-xl' hoverable={true}>
-              Stock Graph
-            </Card>
-            <Card className='card-large' hoverable={true}>
-              {
-                watchList.map((item) => <div> {item.name} | {item.symbol} </div>)
-              }
+            <Card className='card-large overflow-scroll' hoverable={true}>
+              <List itemLayout="horizontal"
+                dataSource={watchList}
+                renderItem={item => (
+                  <List.Item>
+                    <List.Item.Meta
+                      title={<Title level={5}> {item.name} </Title>}
+                    />
+                    <div> Ticker: {item.symbol} </div>
+                  </List.Item>
+                )}
+              />
             </Card>
           </div>
         </Space>

@@ -5,7 +5,6 @@ import IncomeForm from '../events/IncomeAndSavingsForm';
 import TransactionForm from '../events/TransactionForm';
 import CategoryForm from '../events/CategoryForm';
 import { BudgetContext } from '../../context/BudgetContextProvider'
-import { InvestmentContext } from '../../context/InvestmentContextProvider';
 import {
   Chart as ChartJS,
   CategoryScale,

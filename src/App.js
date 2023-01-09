@@ -1,6 +1,6 @@
 import { Layout } from "antd";
 import React from "react";
-import { Overview, Budget, Investment, Schedule } from './components/pages/allPages'
+import { Overview, Budget, Investment } from './components/pages/allPages'
 import { Nav } from './components/layout/allLayout'
 import { Routes, Route } from "react-router-dom";
 import BudgetContextProvider from "./context/BudgetContextProvider";
@@ -36,7 +36,6 @@ const App = () => (
               <Route path="/" element={<Overview />} />
               <Route path="/budget" element={<Budget />} />
               <Route path="/investment" element={<Investment />} />
-              <Route path="/schedule" element={<Schedule />} />
             </Routes>
           </div>
         </Content>

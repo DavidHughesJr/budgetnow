@@ -23,7 +23,6 @@ const InvestmentForm = ({ isShown, setIsShown }) => {
     const [showSpin, setShowSpin] = useState(false)
     const [toWatchList, setToWatchList] = useState(false)
 
-    const { holdings } = useContext(InvestmentContext)
     const { dispatch } = useContext(InvestmentContext)
 
     useEffect(() => {
