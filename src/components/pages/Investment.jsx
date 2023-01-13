@@ -118,8 +118,9 @@ const Investment = () => {
           <div className='flex-between-wrap'>
             {
               investmentTips?.value?.map(data => (
-                <a target="_blank" href={data?.url}>
+                <a target="_blank" rel="noreferrer" href={data?.url}>
                   <Card
+                    key={data?.name}
                     title={data?.name.substr(0, 60) + '...'}
                     hoverable
                     style={{

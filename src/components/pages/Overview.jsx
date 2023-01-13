@@ -2,7 +2,6 @@ import { Card, Space, Typography, Button, List, Col, Row } from 'antd'
 import { PlusOutlined, CrownTwoTone, FireTwoTone, UpCircleTwoTone, DownCircleTwoTone } from '@ant-design/icons';
 import TransactionForm from '../events/TransactionForm';
 import React, { useState, useContext, useEffect } from 'react'
-import { Link } from 'react-router-dom';
 import { BudgetContext } from '../../context/BudgetContextProvider';
 import { InvestmentContext } from '../../context/InvestmentContextProvider';
 import { fetchOverviewNews } from '../../api/apiConfig';
@@ -154,8 +153,9 @@ const Overview = () => {
                     <div className='flex-between-wrap'>
                         {
                             tips?.value?.map(data => (
-                                <a target="_blank" href={data?.url}>
-                                <Card 
+                                <a target="_blank" rel="noreferrer" href={data?.url}>
+                                <Card
+                                    key={data?.name} 
                                     title={data?.name.substr(0, 60) + '...'}
                                     hoverable
                                     style={{
