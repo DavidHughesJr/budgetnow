@@ -116,6 +116,12 @@
   display: flex;
   justify-content: space-between;
 }
+.flex-between-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between
+  
+}
 .investment-form-tickers {
   height: 250px;
   overflow: scroll;
@@ -164,6 +170,10 @@
 }
 .swiper-pagination-bullets {
   bottom: 0 !important;
+}
+.cover-img {
+  width: 100px;
+  height: 100px
 }
 
 @media (min-width: 320px) {

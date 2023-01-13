@@ -22,8 +22,8 @@ export const fetchSymbolSearch = async (search) => {
     const data = await response.json()
     return data
 }
-export const fetchOverviewNews = async (search) => {
-    const response = await fetch(`${overviewUrl}/news/search?q=money%20budget%20tips&freshness=Week&textFormat=Raw&safeSearch=Off`, overviewOptions)
+export const fetchOverviewNews = async (topic) => {
+    const response = await fetch(`${overviewUrl}/news/search?q=money%20${topic}%20tips&freshness=Week&textFormat=Raw&safeSearch=Off`, overviewOptions)
     const data = await response.json()
     return data
 }

@@ -4,8 +4,10 @@ import InvestmentForm from '../events/InvestmentForm'
 import { InvestmentContext } from '../../context/InvestmentContextProvider'
 import {Swiper, SwiperSlide} from 'swiper/react'
 import { Navigation, Pagination} from 'swiper';
+import { fetchOverviewNews } from '../../api/apiConfig'
 import 'swiper/css';
 import 'swiper/css/pagination';
+import { useEffect } from 'react'
 
 
 
@@ -13,6 +15,7 @@ const Investment = () => {
 
   const { Title } = Typography
   const { Text } = Typography
+  const { Meta } = Card;
 
   const [isShown, setIsShown] = useState(false)
 
@@ -22,6 +25,17 @@ const Investment = () => {
   const totalInvestmentAmount = holdings.reduce((acc, arr) => acc + arr.avgPrice * arr.shares, 0)
   const totalShares = holdings.reduce((acc, arr) => acc + arr.shares, 0)
   const avgPricePer = holdings.reduce((acc, arr) => (acc + arr.avgPrice * arr.shares) / (acc + arr.shares), 0).toFixed(2)
+
+
+  const [investmentTips, setInvestmentTips] = useState([])
+
+  useEffect(() => {
+    const getInvestmentTips = async () => {
+      const investmentTips = await fetchOverviewNews('investment')
+      setInvestmentTips(investmentTips)
+    }
+    getInvestmentTips()
+  }, [])
 
 
   return (
@@ -97,6 +111,30 @@ const Investment = () => {
                 )}
               />
             </Card>
+          </div>
+        </Space>
+        <Space style={{ marginTop: 20 }} direction='vertical'>
+          <Title level={2}> News & Daily Tips  </Title>
+          <div className='flex-between-wrap'>
+            {
+              investmentTips?.value?.map(data => (
+                <a target="_blank" href={data?.url}>
+                  <Card
+                    title={data?.name.substr(0, 60) + '...'}
+                    hoverable
+                    style={{
+                      marginBottom: 10,
+                      width: 300,
+                      height: 400
+                    }}
+                  >
+                    <p>{data?.description}</p>
+                    <Meta title={data?.provider?.[0]?.name} description={data?.url} />
+
+                  </Card>
+                </a>
+              ))
+            }
           </div>
         </Space>
       </div>

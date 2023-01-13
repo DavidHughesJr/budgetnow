@@ -2,6 +2,7 @@ import { Card, Space, Typography, Button, List, Col, Row } from 'antd'
 import { PlusOutlined, CrownTwoTone, FireTwoTone, UpCircleTwoTone, DownCircleTwoTone } from '@ant-design/icons';
 import TransactionForm from '../events/TransactionForm';
 import React, { useState, useContext, useEffect } from 'react'
+import { Link } from 'react-router-dom';
 import { BudgetContext } from '../../context/BudgetContextProvider';
 import { InvestmentContext } from '../../context/InvestmentContextProvider';
 import { fetchOverviewNews } from '../../api/apiConfig';
@@ -49,14 +50,13 @@ const Overview = () => {
     useEffect(() => {
 
         const budgetTips = async () => {
-            const getTips = await fetchOverviewNews()
+            const getTips = await fetchOverviewNews('budget')
             setTips(getTips)
         }
       budgetTips()
     }, [])
 
 
-    console.log(tips.value)
 
 
   
@@ -149,20 +149,29 @@ const Overview = () => {
                             />
                         </Card>
                     </Space>
-                    <Space>
+                    <Space style={{marginTop: 20}} direction='vertical'>
+                    <Title level={2}> News & Daily Tips  </Title>
+                    <div className='flex-between-wrap'>
                         {
                             tips?.value?.map(data => (
-                                <Card
+                                <a target="_blank" href={data?.url}>
+                                <Card 
+                                    title={data?.name.substr(0, 60) + '...'}
                                     hoverable
                                     style={{
-                                        width: 240,
+                                        marginBottom: 10,
+                                        width: 300,
+                                        height: 400
                                     }}
-                                    cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
                                 >
-                                    <Meta title="Europe Street beat" description="www.instagram.com" />
+                                    <p>{data?.description}</p>
+                                    <Meta title={data?.provider?.[0]?.name} description={data?.url} />
+                                
                                 </Card>
+                                </a>
                             ))
                         }
+                    </div>
                     </Space>
                 </div>
             </div>

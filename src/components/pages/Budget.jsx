@@ -1,10 +1,11 @@
-import { Card, Space, Typography, Progress, Button, List } from 'antd'
+import { Card, Space, Typography, Progress, Button, List, } from 'antd'
 import { PlusOutlined } from '@ant-design/icons';
 import React, { useContext, useState, useEffect } from 'react'
 import IncomeForm from '../events/IncomeAndSavingsForm';
 import TransactionForm from '../events/TransactionForm';
 import CategoryForm from '../events/CategoryForm';
 import { BudgetContext } from '../../context/BudgetContextProvider'
+import { fetchOverviewNews } from '../../api/apiConfig';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -37,6 +38,8 @@ const Budget = () => {
   const { Title } = Typography
   const { Text } = Typography
   const { Paragraph } = Typography
+  const { Meta } = Card;
+
 
   const { budget } = useContext(BudgetContext)
   const { categories } = useContext(BudgetContext)
@@ -91,6 +94,20 @@ const Budget = () => {
       },
     ]
   };
+
+
+
+  const [incomeTips, setIncomeTips] = useState([])
+
+  useEffect(() => {
+      const incomeTips = async () => {
+        const getIncomeTips = await fetchOverviewNews('income')
+        setIncomeTips(getIncomeTips)
+      }
+      incomeTips()
+  }, [])
+
+  console.log(incomeTips)
 
    
 
@@ -206,6 +223,29 @@ const Budget = () => {
           </Card>
         </div>
       </div>
+      <Space style={{ marginTop: 20 }} direction='vertical'>
+        <Title level={2}> News & Daily Tips  </Title>
+        <div className='flex-between-wrap'>
+          {
+            incomeTips?.value?.map(data => (
+              <a target="_blank" href={data?.url}>
+                <Card
+                  title={data?.name.substr(0, 60) + '...'}
+                  hoverable
+                  style={{
+                    marginBottom: 10,
+                    width: 300,
+                    height: 400
+                  }}
+                >
+                  <p>{data?.description}</p>
+                  <Meta title={data?.provider?.[0]?.name} description={data?.url} />
+                </Card>
+              </a>
+            ))
+          }
+        </div>
+      </Space>
     </div>
   )
 }
