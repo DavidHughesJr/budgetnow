@@ -106,7 +106,7 @@ const Budget = () => {
       }
       incomeTips()
   }, [])
-
+   
   console.log(incomeTips)
 
    
