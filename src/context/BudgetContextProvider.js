@@ -48,12 +48,12 @@ const initialState = {
         { id: uuid(), name: 'retirement', amount: 2000 }
     ],
     categories: [
-        { name: 'Groceries', limit: 1000 },
-        { name: 'Utilities', limit: 1000 },
-        { name: 'Transportation', limit: 500 },
-        { name: 'Medical', limit: 500 },
-        { name: 'Retirement', limit: 500 },
-        { name: 'Savings', limit: 100 },
+        { id: uuid(), name: 'Groceries', limit: 1000 },
+        { id: uuid(), name: 'Utilities', limit: 1000 },
+        { id: uuid(), name: 'Transportation', limit: 500 },
+        { id: uuid(), name: 'Medical', limit: 500 },
+        { id: uuid(), name: 'Retirement', limit: 500 },
+        { id: uuid(), name: 'Savings', limit: 100 },
         { name: 'Investments', limit: 100 },
         { name: 'Entertainment', limit: 100 },
         { name: 'Other', limit: 100 },

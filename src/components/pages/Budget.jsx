@@ -1,5 +1,5 @@
 import { Card, Space, Typography, Progress, Button, List, } from 'antd'
-import { PlusOutlined } from '@ant-design/icons';
+import { PlusOutlined, CloseOutlined } from '@ant-design/icons';
 import React, { useContext, useState, useEffect } from 'react'
 import IncomeForm from '../events/IncomeAndSavingsForm';
 import TransactionForm from '../events/TransactionForm';
@@ -18,6 +18,7 @@ import {
   Filler
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
+import DeleteTransactions from '../events/DeleteTransactions';
 
 
 
@@ -70,20 +71,20 @@ const Budget = () => {
 
   const [transactionsAdded, setIsTransactionAdded] = useState([])
 
- useEffect(() => {
-   const transactionsAdded = [...transactions].reduce((items, item) => {
-     const { category, cost } = item;
-     const itemIndex = items.findIndex(item => item.category === category)
-     if (itemIndex === -1) {
-       items.push(item);
-     } else {
-       items[itemIndex].cost += cost
-     }
-     return items
-   }, [])
-  setIsTransactionAdded(transactionsAdded)
- },[transactions])
-  
+  useEffect(() => {
+    const transactionsAdded = [...transactions].reduce((items, item) => {
+      const { category, cost } = item;
+      const itemIndex = items.findIndex(item => item.category === category)
+      if (itemIndex === -1) {
+        items.push(item);
+      } else {
+        items[itemIndex].cost += cost
+      }
+      return items
+    }, [])
+    setIsTransactionAdded(transactionsAdded)
+  }, [transactions])
+
   const data = {
     labels: transactionsAdded.map(item => item.category),
     datasets: [
@@ -96,25 +97,21 @@ const Budget = () => {
     ]
   };
 
-
-
   const [incomeTips, setIncomeTips] = useState([])
 
   useEffect(() => {
-      const incomeTips = async () => {
-        const getIncomeTips = await fetchOverviewNews('income')
-        setIncomeTips(getIncomeTips)
-      }
-      incomeTips()
+    const incomeTips = async () => {
+      const getIncomeTips = await fetchOverviewNews('income')
+      setIncomeTips(getIncomeTips)
+    }
+    incomeTips()
   }, [])
-   
-  console.log(incomeTips)
 
-   
 
   const [isShown, setIsShown] = useState(false)
   const [isItem, setIsItem] = useState(false)
   const [isTransaction, setIsTransaction] = useState(false)
+  const [isDeleteTransaction, setIsDeleteTransaction] = useState(false)
   const [isCategory, setIsCategory] = useState(false)
 
   const handleAddItemsPopup = event => {
@@ -124,6 +121,11 @@ const Budget = () => {
   const handleTransactionsPopup = event => {
     setIsShown(true)
     setIsTransaction(true)
+  }
+  const handleDeleteTransactions = event => {
+    setIsShown(true)
+    setIsDeleteTransaction(true)
+    
   }
   const handleCategoriesPopup = event => {
     setIsShown(true)
@@ -138,6 +140,9 @@ const Budget = () => {
       )}
       {isShown && isTransaction && (
         <TransactionForm isShown={isShown} setIsShown={setIsShown} setIsTransaction={setIsTransaction} />
+      )}
+      {isShown && isDeleteTransaction && (
+        <DeleteTransactions isShown={isShown} setIsShown={setIsShown} setIsDeleteTransaction={setIsDeleteTransaction} />
       )}
       {isShown && isCategory && (
         <CategoryForm isShown={isShown} setIsShown={setIsShown} setIsCategory={setIsCategory} />
@@ -172,7 +177,6 @@ const Budget = () => {
                 <Progress width='155px' type="circle" percent={percentOnBudget} format={amount => percentOnBudget === '100' ? <h1 style={{ color: 'red' }}> ${totalIncome} </h1> : <h1> ${totalIncome} </h1>}
                   strokeColor={percentOnBudget === '100' ? 'red' : '#1890FF'} />
               }
-
               <div >
                 <Title level={5}> Remaining:  ${totalCategorized - totalTransactions} </Title>
                 <Title level={5}> Categorized: ${totalCategorized}  </Title>
@@ -181,6 +185,7 @@ const Budget = () => {
           </Card>
           <Card className='btn-center no-border'>
             <Button onClick={handleAddItemsPopup}> Add Items </Button>
+            
           </Card>
         </Space>
         <div className='layout-2' direction='horizontal'>
@@ -191,7 +196,10 @@ const Budget = () => {
               <Line height="100%" width="100%" options={options} data={data} />
             </div>
           </Card>
-          <Card className='card-large-2' title="Transaction" hoverable={true} extra={<Button onClick={handleTransactionsPopup} type="primary" size="small"> <PlusOutlined /> </Button>}>
+          <Card className='card-large-2' title="Transaction" hoverable={true}
+            extra={<div> <Button className='dbbutton-margin' onClick={handleTransactionsPopup} type="primary" size="small"> <PlusOutlined /> </Button>
+              <Button onClick={handleDeleteTransactions} type="primary" danger size="small"> <CloseOutlined /> </Button> </div>
+            }>
             <div className='overflow-scroll'>
               <List itemLayout="horizontal"
                 dataSource={transactions.slice().reverse()}
@@ -207,12 +215,17 @@ const Budget = () => {
               />
             </div>
           </Card>
-          <Card className='card-large-1' title="Categories" hoverable={true} extra={<Button onClick={handleCategoriesPopup} type="primary" size="small"> <PlusOutlined /> </Button>}>
+          <Card className='card-large-1' title="Categories" hoverable={true} extra={<div> <Button className='dbbutton-margin' onClick={handleCategoriesPopup} type="primary" size="small"> <PlusOutlined /> </Button>
+        <Button onClick={(e) => console.log(e) } type="primary" danger size="small"> <CloseOutlined /> </Button> </div>
+        }>
             <div className='overflow-scroll'>
               <List itemLayout="horizontal"
                 dataSource={categories.sort((a, b) => b.limit - a.limit)}
                 renderItem={item => (
-                  <List.Item>
+                  <List.Item
+                    id={item.id}
+                    onClick={(e) => console.log(e.target)}
+                  >
                     <List.Item.Meta
                       title={<Title level={5}> {item.name} </Title>}
                       description={<Text style={{ color: '#1890FF' }}> Limit: ${item.limit}</Text>}
@@ -223,31 +236,32 @@ const Budget = () => {
             </div>
           </Card>
         </div>
+        <Space style={{ marginTop: 20 }} direction='vertical'>
+          <Title level={2}> News & Daily Tips  </Title>
+          <div className='flex-between-wrap'>
+            {
+              incomeTips?.value?.map(data => (
+                <a target="_blank" rel="noreferrer" href={data?.url}>
+                  <Card
+                    key={data?.name}
+                    title={data?.name.substr(0, 60) + '...'}
+                    hoverable
+                    style={{
+                      marginBottom: 10,
+                      width: 300,
+                      height: 400
+                    }}
+                  >
+                    <p>{data?.description}</p>
+                    <Meta title={data?.provider?.[0]?.name} description={data?.url} />
+                  </Card>
+                </a>
+              ))
+            }
+          </div>
+        </Space>
       </div>
-      <Space style={{ marginTop: 20 }} direction='vertical'>
-        <Title level={2}> News & Daily Tips  </Title>
-        <div className='flex-between-wrap'>
-          {
-            incomeTips?.value?.map(data => (
-              <a target="_blank" rel="noreferrer" href={data?.url}>
-                <Card
-                  key={data?.name}
-                  title={data?.name.substr(0, 60) + '...'}
-                  hoverable
-                  style={{
-                    marginBottom: 10,
-                    width: 300,
-                    height: 400
-                  }}
-                >
-                  <p>{data?.description}</p>
-                  <Meta title={data?.provider?.[0]?.name} description={data?.url} />
-                </Card>
-              </a>
-            ))
-          }
-        </div>
-      </Space>
+     
     </div>
   )
 }
