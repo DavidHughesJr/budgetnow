@@ -6,11 +6,10 @@ import {
 } from 'antd';
 import React, { useState, useContext } from 'react';
 import { BudgetContext } from '../../context/BudgetContextProvider';
-import uuid from 'react-uuid';
+
 
 const DeleteTransactions = ({ isShown, setIsShown, setIsDeleteTransaction }) => {
 
-    const { categories } = useContext(BudgetContext)
     const { dispatch } = useContext(BudgetContext)
     const { transactions } = useContext(BudgetContext)
 
