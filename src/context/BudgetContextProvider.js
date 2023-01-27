@@ -24,6 +24,11 @@ const BudgetReducer = (state, action) => {
                 ...state,
                 transactions: [...state.transactions, action.payload],
             }
+            case 'DELETE TRANSACTION':
+                return {
+                    ...state,
+                    transactions: state.transactions.filter((item) => item.id !== action.payload),
+                  };
         case 'ADD CATEGORY':
             return {
                 ...state,

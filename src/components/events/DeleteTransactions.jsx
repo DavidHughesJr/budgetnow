@@ -1,8 +1,8 @@
 import {
     Button,
     Form,
-    Checkbox,
     Typography,
+    Radio,
 } from 'antd';
 import React, { useState, useContext } from 'react';
 import { BudgetContext } from '../../context/BudgetContextProvider';
@@ -14,9 +14,9 @@ const DeleteTransactions = ({ isShown, setIsShown, setIsDeleteTransaction }) => 
     const { dispatch } = useContext(BudgetContext)
     const { transactions } = useContext(BudgetContext)
 
-    const [name, setName] = useState('')
-    const [category, setCategory] = useState('')
-    const [cost, setCost] = useState('')
+    const [deleteThisTransaction, setDeleteThisTransaction] = useState([])
+
+
 
     const handleClose = (event) => {
         setIsShown(current => !current)
@@ -26,21 +26,15 @@ const DeleteTransactions = ({ isShown, setIsShown, setIsDeleteTransaction }) => 
     const handleSubmit = (event) => {
         event.preventDefault()
 
-
-        const transactions = {
-            id: uuid(),
-            name: name,
-            category: category,
-            cost: cost
-        }
-
         dispatch({
-            type: 'ADD TRANSACTION',
-            payload: transactions,
+            type: 'DELETE TRANSACTION',
+            payload: deleteThisTransaction,
         })
         setIsShown(current => !current)
         setIsDeleteTransaction(current => !current)
     }
+
+
 
 
     return (
@@ -58,13 +52,17 @@ const DeleteTransactions = ({ isShown, setIsShown, setIsDeleteTransaction }) => 
                 <Typography>
                     <pre> Delete Transactions </pre>
                 </Typography>
+                <Radio.Group> 
                 {
                     transactions.map((item) => (
-                        <Form.Item>
-                            <Checkbox onChange={(e) => console.log(e.target)}>{item.name} </Checkbox>
+                        <Form.Item onChange={(e) => setDeleteThisTransaction(e.target.value)}>
+                          
+                            <Radio value={item.id}> {item.name} | Cost: {item.cost} | Category: {item.cost}  </Radio>
+                           
                         </Form.Item>
                     ))
                 }
+                 </Radio.Group>
                 <Form.Item label="">
                     <Button onClick={handleSubmit} type="primary" htmlType="submit">
                         Submit

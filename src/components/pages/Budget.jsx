@@ -261,7 +261,6 @@ const Budget = () => {
           </div>
         </Space>
       </div>
-     
     </div>
   )
 }
