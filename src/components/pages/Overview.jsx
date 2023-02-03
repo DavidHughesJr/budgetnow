@@ -20,7 +20,7 @@ const Overview = () => {
     const { budget } = useContext(BudgetContext)
     const { transactions } = useContext(BudgetContext)
     const { categories } = useContext(BudgetContext)
-
+ 
     const { holdings } = useContext(InvestmentContext)
     const { watchList } = useContext(InvestmentContext)
 
@@ -164,7 +164,7 @@ const Overview = () => {
                                         height: 400
                                     }}
                                 >
-                                    <p>{data?.description}</p>
+                                        <p>{data?.description.substr(0, 200) + '...'}</p>
                                     <Meta title={data?.provider?.[0]?.name} description={data?.url} />
                                 
                                 </Card>

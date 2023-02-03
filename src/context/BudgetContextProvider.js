@@ -1,9 +1,10 @@
-import { createContext, useReducer } from 'react'
+import { createContext, useEffect, useReducer, useState } from 'react'
 import uuid from 'react-uuid'
 
 
-
 const BudgetReducer = (state, action) => {
+
+
     switch (action.type) {
         case 'ADD BUDGET':
             return {
@@ -14,7 +15,7 @@ const BudgetReducer = (state, action) => {
                     if (itemIndex === -1) {
                         items.push(item);
                     } else {
-                        items[itemIndex].amount += amount   
+                        items[itemIndex].amount += amount
                     }
                     return items
                 }, []),
@@ -34,60 +35,79 @@ const BudgetReducer = (state, action) => {
                 ...state,
                 categories: [...state.categories, action.payload],
             }
-            
+        case 'DELETE CATEGORY':
+            return {
+                ...state,
+                categories: state.categories.filter((item) => item.id !== action.payload),
+            };
+
         default: return state
     }
 }
 
 
-const initialState = {
 
-    budget: [
-        { name: 'Income', amount: 6000 },
-        { name: 'Secondary Income', amount: 500 },
-        { name: 'Long Term Savings', amount: 1000 },
-        { name: 'Short Term Savings', amount: 200 },
-    ],
-    investment: [
-        { id: uuid(), name: 'investment', amount: 1000 },
-        { id: uuid(), name: 'retirement', amount: 2000 }
-    ],
-    categories: [
-        { id: uuid(), name: 'Groceries', limit: 1000 },
-        { id: uuid(), name: 'Utilities', limit: 1000 },
-        { id: uuid(), name: 'Transportation', limit: 500 },
-        { id: uuid(), name: 'Medical', limit: 500 },
-        { id: uuid(), name: 'Retirement', limit: 500 },
-        { id: uuid(), name: 'Savings', limit: 100 },
-        { name: 'Investments', limit: 100 },
-        { name: 'Entertainment', limit: 100 },
-        { name: 'Other', limit: 100 },
-    ],
-    transactions: [
-        { id: uuid(), name: 'Kroger', category: 'Groceries', cost: 200 },
-        { id: uuid(), name: 'Shell gas', category: 'Transportation', cost: 50 },
-        { id: uuid(), name: 'Blue cross insurance', category: 'Insurance', cost: 250 },
-        { id: uuid(), name: 'Roth IRA', category: 'Retirement', cost: 500 },
-        { id: uuid(), name: 'Extra cash', category: 'Savings', cost: 100 },
-        { id: uuid(), name: 'Spotify', category: 'Entertainment', cost: 10 },
-    ],
+function getInitialState() {
+    const initialBudgetState = localStorage.getItem('initialBudgetState')
+    return initialBudgetState ? JSON.parse(initialBudgetState) : {
+        budget: [
+            { name: 'Income', amount: 6000 },
+            { name: 'Secondary Income', amount: 500 },
+            { name: 'Long Term Savings', amount: 1000 },
+            { name: 'Short Term Savings', amount: 200 },
+        ],
+        investment: [
+            { id: uuid(), name: 'investment', amount: 1000 },
+            { id: uuid(), name: 'retirement', amount: 2000 }
+        ],
+        categories: [
+            { id: uuid(), name: 'Groceries', limit: 1000 },
+            { id: uuid(), name: 'Utilities', limit: 1000 },
+            { id: uuid(), name: 'Transportation', limit: 500 },
+            { id: uuid(), name: 'Medical', limit: 500 },
+            { id: uuid(), name: 'Retirement', limit: 500 },
+            { id: uuid(), name: 'Savings', limit: 100 },
+            { id: uuid(), name: 'Investments', limit: 100 },
+            { id: uuid(), name: 'Entertainment', limit: 100 },
+            { id: uuid(), name: 'Other', limit: 100 },
+        ],
+        transactions: [
+            { id: uuid(), name: 'Kroger', category: 'Groceries', cost: 200 },
+            { id: uuid(), name: 'Shell gas', category: 'Transportation', cost: 50 },
+            { id: uuid(), name: 'Blue cross insurance', category: 'Insurance', cost: 250 },
+            { id: uuid(), name: 'Roth IRA', category: 'Retirement', cost: 500 },
+            { id: uuid(), name: 'Extra cash', category: 'Savings', cost: 100 },
+            { id: uuid(), name: 'Spotify', category: 'Entertainment', cost: 10 },
+        ],
+    }
 }
-
-
-
 
 export const BudgetContext = createContext()
 
 const BudgetContextProvider = (props) => {
 
+ 
 
-    const [state, dispatch] = useReducer(BudgetReducer, initialState)
-    
+    const [initialBudgetState, setInitialBudgetState] = useState(getInitialState)
+    const [state, dispatch] = useReducer(BudgetReducer, initialBudgetState)
+
+
+    useEffect(() => {
+
+        localStorage.setItem('initialBudgetState', JSON.stringify(state))
+        
+    }, [initialBudgetState, state])
+
+  
+
+
+
     const totals = [
-        { budget: initialState.budget.reduce((acc, arr) => acc + arr.amount, 0) },
-        { categories: initialState.categories.reduce((acc, arr) => acc + arr.limit, 0) },
-        { transactions: initialState.transactions.reduce((acc, arr) => acc + arr.cost, 0) }
+        { budget: initialBudgetState.budget.reduce((acc, arr) => acc + arr.amount, 0) },
+        { categories: initialBudgetState.categories.reduce((acc, arr) => acc + arr.limit, 0) },
+        { transactions: initialBudgetState.transactions.reduce((acc, arr) => acc + arr.cost, 0) }
     ]
+
 
 
     return (

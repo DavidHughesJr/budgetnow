@@ -129,7 +129,7 @@ const Investment = () => {
                       height: 400
                     }}
                   >
-                    <p>{data?.description}</p>
+                    <p>{data?.description.substr(0, 200) + '...'}</p>
                     <Meta title={data?.provider?.[0]?.name} description={data?.url} />
 
                   </Card>

@@ -19,6 +19,7 @@ import {
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import DeleteTransactions from '../events/DeleteTransactions';
+import DeleteCategories from '../events/DeleteCategories';
 
 
 
@@ -46,12 +47,12 @@ const Budget = () => {
   const { budget } = useContext(BudgetContext)
   const { categories } = useContext(BudgetContext)
   const { transactions } = useContext(BudgetContext)
-  const totalIncome = budget[0].amount + budget[1].amount
-  const totalSavings = budget[2].amount + budget[3].amount
+  const totalIncome = budget[0]?.amount + budget[1]?.amount
+  const totalSavings = budget[2]?.amount + budget[3]?.amount
 
   const budgetAndSavings = [
-    { text: 'Your Total Income', title: `$${totalIncome}`, subtitle1: 'Primary', subtitle1Text: `$${budget[0].amount}`, subtitle2: 'Secondary', subtitle2Text: `$${budget[1].amount}` },
-    { text: 'Your Total Savings', title: `$${totalSavings}`, subtitle1: 'Long Term', subtitle1Text: `$${budget[2].amount}`, subtitle2: 'Short Term', subtitle2Text: `$${budget[3].amount}` },
+    { text: 'Your Total Income', title: `$${totalIncome}`, subtitle1: 'Primary', subtitle1Text: `$${budget[0]?.amount}`, subtitle2: 'Secondary', subtitle2Text: `$${budget[1]?.amount}` },
+    { text: 'Your Total Savings', title: `$${totalSavings}`, subtitle1: 'Long Term', subtitle1Text: `$${budget[2]?.amount}`, subtitle2: 'Short Term', subtitle2Text: `$${budget[3]?.amount}` },
   ]
 
   const totalCategorized = categories.reduce((acc, arr) => acc + arr.limit, 0)
@@ -112,6 +113,7 @@ const Budget = () => {
   const [isItem, setIsItem] = useState(false)
   const [isTransaction, setIsTransaction] = useState(false)
   const [isDeleteTransaction, setIsDeleteTransaction] = useState(false)
+  const [isDeleteCategory, setIsDeleteCategory] = useState(false)
   const [isCategory, setIsCategory] = useState(false)
 
   const handleAddItemsPopup = event => {
@@ -125,12 +127,16 @@ const Budget = () => {
   const handleDeleteTransactions = event => {
     setIsShown(true)
     setIsDeleteTransaction(true)
-    
   }
   const handleCategoriesPopup = event => {
     setIsShown(true)
     setIsCategory(true)
   }
+  const handleDeleteCategory = event => {
+    setIsShown(true)
+    setIsDeleteCategory(true)
+  }
+
 
 
   return (
@@ -146,6 +152,9 @@ const Budget = () => {
       )}
       {isShown && isCategory && (
         <CategoryForm isShown={isShown} setIsShown={setIsShown} setIsCategory={setIsCategory} />
+      )}
+      {isShown && isDeleteCategory && (
+        <DeleteCategories isShown={isShown} setIsShown={setIsShown} setIsDeleteCategory={setIsDeleteCategory} />
       )}
       <div className={!isShown ? 'layout' : 'layout popup-background'}>
         <Space className='layout' direction='horizontal' align=''>
@@ -216,7 +225,7 @@ const Budget = () => {
             </div>
           </Card>
           <Card className='card-large-1' title="Categories" hoverable={true} extra={<div> <Button className='dbbutton-margin' onClick={handleCategoriesPopup} type="primary" size="small"> <PlusOutlined /> </Button>
-        <Button onClick={(e) => console.log(e) } type="primary" danger size="small"> <CloseOutlined /> </Button> </div>
+        <Button onClick={handleDeleteCategory} type="primary" danger size="small"> <CloseOutlined /> </Button> </div>
         }>
             <div className='overflow-scroll'>
               <List itemLayout="horizontal"
@@ -253,7 +262,7 @@ const Budget = () => {
                     }}
                   >
                     <p>{data?.description}</p>
-                    <Meta title={data?.provider?.[0]?.name} description={data?.url} />
+                    <Meta title={data?.description.substr(0, 200) + '...'} description={data?.url} />
                   </Card>
                 </a>
               ))
