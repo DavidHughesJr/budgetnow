@@ -51,33 +51,30 @@ function getInitialState() {
     const initialBudgetState = localStorage.getItem('initialBudgetState')
     return initialBudgetState ? JSON.parse(initialBudgetState) : {
         budget: [
-            { name: 'Income', amount: 6000 },
-            { name: 'Secondary Income', amount: 500 },
-            { name: 'Long Term Savings', amount: 1000 },
-            { name: 'Short Term Savings', amount: 200 },
+            
         ],
         investment: [
-            { id: uuid(), name: 'investment', amount: 1000 },
-            { id: uuid(), name: 'retirement', amount: 2000 }
+            // { id: uuid(), name: 'investment', amount: 1000 },
+            // { id: uuid(), name: 'retirement', amount: 2000 }
         ],
         categories: [
-            { id: uuid(), name: 'Groceries', limit: 1000 },
-            { id: uuid(), name: 'Utilities', limit: 1000 },
-            { id: uuid(), name: 'Transportation', limit: 500 },
-            { id: uuid(), name: 'Medical', limit: 500 },
-            { id: uuid(), name: 'Retirement', limit: 500 },
-            { id: uuid(), name: 'Savings', limit: 100 },
-            { id: uuid(), name: 'Investments', limit: 100 },
-            { id: uuid(), name: 'Entertainment', limit: 100 },
-            { id: uuid(), name: 'Other', limit: 100 },
+            // { id: uuid(), name: 'Groceries', limit: 1000 },
+            // { id: uuid(), name: 'Utilities', limit: 1000 },
+            // { id: uuid(), name: 'Transportation', limit: 500 },
+            // { id: uuid(), name: 'Medical', limit: 500 },
+            // { id: uuid(), name: 'Retirement', limit: 500 },
+            // { id: uuid(), name: 'Savings', limit: 100 },
+            // { id: uuid(), name: 'Investments', limit: 100 },
+            // { id: uuid(), name: 'Entertainment', limit: 100 },
+            // { id: uuid(), name: 'Other', limit: 100 },
         ],
         transactions: [
-            { id: uuid(), name: 'Kroger', category: 'Groceries', cost: 200 },
-            { id: uuid(), name: 'Shell gas', category: 'Transportation', cost: 50 },
-            { id: uuid(), name: 'Blue cross insurance', category: 'Insurance', cost: 250 },
-            { id: uuid(), name: 'Roth IRA', category: 'Retirement', cost: 500 },
-            { id: uuid(), name: 'Extra cash', category: 'Savings', cost: 100 },
-            { id: uuid(), name: 'Spotify', category: 'Entertainment', cost: 10 },
+            // { id: uuid(), name: 'Kroger', category: 'Groceries', cost: 200 },
+            // { id: uuid(), name: 'Shell gas', category: 'Transportation', cost: 50 },
+            // { id: uuid(), name: 'Blue cross insurance', category: 'Insurance', cost: 250 },
+            // { id: uuid(), name: 'Roth IRA', category: 'Retirement', cost: 500 },
+            // { id: uuid(), name: 'Extra cash', category: 'Savings', cost: 100 },
+            // { id: uuid(), name: 'Spotify', category: 'Entertainment', cost: 10 },
         ],
     }
 }
