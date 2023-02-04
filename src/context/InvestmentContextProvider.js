@@ -25,7 +25,7 @@ const HoldingsReducer = (state, action) => {
 }
 
 
-function getInitialInvestmentState() {
+function getInitialState() {
     const initialInvestmentState = localStorage.getItem('initialInvestmentState')
     return initialInvestmentState ? JSON.parse(initialInvestmentState) : {
         holdings: [
@@ -61,13 +61,13 @@ export const InvestmentContext = createContext()
 
 const InvestmentContextProvider = (props) => {
 
-    const [initialInvestmentState] = useState(getInitialInvestmentState)
+    const [initialInvestmentState] = useState(getInitialState)
     const [state, dispatch] = useReducer(HoldingsReducer, initialInvestmentState)
 
 
     useEffect(() => {
 
-        localStorage.getItem('initialInvestmentState', JSON.stringify(state))
+        localStorage.setItem('initialInvestmentState', JSON.stringify(state))
 
     }, [initialInvestmentState, state])
 
