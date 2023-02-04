@@ -175,8 +175,13 @@
   width: 100px;
   height: 100px
 }
-.dbbutton-margin{
+.dbutton-margin{
   margin-right: 5px;
+}
+.dbutton-invest {
+  margin-bottom: 8px;
+  display: flex;
+  gap: 4px
 }
 @media (min-width: 320px) {
   .layout {

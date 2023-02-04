@@ -206,7 +206,7 @@ const Budget = () => {
             </div>
           </Card>
           <Card className='card-large-2' title="Transaction" hoverable={true}
-            extra={<div> <Button className='dbbutton-margin' onClick={handleTransactionsPopup} type="primary" size="small"> <PlusOutlined /> </Button>
+            extra={<div> <Button className='dbutton-margin' onClick={handleTransactionsPopup} type="primary" size="small"> <PlusOutlined /> </Button>
               <Button onClick={handleDeleteTransactions} type="primary" danger size="small"> <CloseOutlined /> </Button> </div>
             }>
             <div className='overflow-scroll'>

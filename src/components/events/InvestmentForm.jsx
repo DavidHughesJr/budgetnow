@@ -9,7 +9,7 @@ const { Title } = Typography
 const { Text } = Typography
 
 
-const InvestmentForm = ({ isShown, setIsShown }) => {
+const InvestmentForm = ({ isShown, setIsShown, setIsAdd }) => {
 
     const [search, setSearch] = useState('')
     const [marketSearchData, setMarketSearchData] = useState([])
@@ -36,6 +36,7 @@ const InvestmentForm = ({ isShown, setIsShown }) => {
 
     const handleClose = (event) => {
         setIsShown(current => !current)
+        setIsAdd(current => !current)
     }
 
     const handleSearch = (value) => {
@@ -78,6 +79,7 @@ const InvestmentForm = ({ isShown, setIsShown }) => {
             })
 
         setIsShown(current => !current)
+        setIsAdd(current => !current)
     }
 
 

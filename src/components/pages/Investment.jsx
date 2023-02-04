@@ -1,6 +1,7 @@
 import { Button, Card, Space, Typography, List } from 'antd'
 import React, { useState, useContext } from 'react'
 import InvestmentForm from '../events/InvestmentForm'
+import EditInvestmentForm from '../events/EditInvestmentsForm'
 import { InvestmentContext } from '../../context/InvestmentContextProvider'
 import {Swiper, SwiperSlide} from 'swiper/react'
 import { Navigation, Pagination} from 'swiper';
@@ -37,17 +38,35 @@ const Investment = () => {
     getInvestmentTips()
   }, [])
 
+  const [isAdd, setIsAdd] = useState(false)
+  const [isEdit, setIsEdit] = useState(false)
+
+  const handleAdd = event => {
+    setIsShown(true)
+    setIsAdd(true)
+  }
+  const handleEdit = event => {
+    setIsShown(true)
+    setIsEdit(true)
+  }
+
+
 
   return (
     <>
       {
-        !isShown ? '' :
-          <InvestmentForm isShown={isShown} setIsShown={setIsShown} />
-      }
+        isShown && isAdd && (
+          <InvestmentForm setIsShown={setIsShown} setIsAdd={setIsAdd} />
+        )}
+      {
+        isShown && isEdit && (
+          <EditInvestmentForm setIsShown={setIsShown} setIsEdit={setIsEdit} />
+        )}
       <div className={!isShown ? 'layout' : 'layout popup-background'} >
         <h2> Investments </h2>
-        <div style={{ marginBottom: 8 }}>
-          <Button onClick={() => setIsShown(true)} type='primary'> Add Stock </Button>
+        <div className='dbutton-invest'>
+          <Button onClick={handleAdd} type='primary'> Add Stock </Button>
+          <Button onClick={handleEdit} type='secondary'> Edit Stock </Button>
         </div>
         <Space direction='vertical' style={{ width: '100%'}}>
           <Card className='card-wide' hoverable={true}>
