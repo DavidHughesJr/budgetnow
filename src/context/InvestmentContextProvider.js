@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState} from 'react'
 import { createContext, useReducer } from 'react'
 import uuid from 'react-uuid'
 
@@ -25,36 +25,51 @@ const HoldingsReducer = (state, action) => {
 }
 
 
-const initialState = {
-    holdings: [
-        { id: uuid(), name: 'Coca-Cola', symbol: 'AMD', shares: 10, avgPrice: 50.00 },
-        { id: uuid(), name: 'AMD Tech', symbol: 'KO', shares: 6, avgPrice: 30.00 },
-        { id: uuid(), name: 'Coca-Cola', symbol: 'AMD', shares: 10, avgPrice: 50.00 },
-        { id: uuid(), name: 'AMD Tech', symbol: 'KO', shares: 7, avgPrice: 30.00 },
-        { id: uuid(), name: 'Coca-Cola', symbol: 'AMD', shares: 10, avgPrice: 50.00 },
-        { id: uuid(), name: 'AMD Tech', symbol: 'KO', shares: 10, avgPrice: 30.00 },
-        { id: uuid(), name: 'Coca-Cola', symbol: 'AMD', shares: 10, avgPrice: 50.00 },
-        { id: uuid(), name: 'AMD Tech', symbol: 'KO', shares: 10, avgPrice: 30.00 },
-        { id: uuid(), name: 'Coca-Cola', symbol: 'AMD', shares: 10, avgPrice: 50.00 },
-        { id: uuid(), name: 'AMD Tech', symbol: 'KO', shares: 10, avgPrice: 30.00 },
-    ],
-    watchList: [
-        { id: uuid(), name: 'Apple', symbol: ' AAPL' },
-        { id: uuid(), name: 'Apple', symbol: ' AAPL' },
-        { id: uuid(), name: 'Apple', symbol: ' AAPL' },
-        { id: uuid(), name: 'Apple', symbol: ' AAPL' },
-        { id: uuid(), name: 'Apple', symbol: ' AAPL' },
-        { id: uuid(), name: 'Apple', symbol: ' AAPL' },
-        { id: uuid(), name: 'Apple', symbol: ' AAPL' },
-        { id: uuid(), name: 'Apple', symbol: ' AAPL' },
-    ],
+function getInitialInvestmentState() {
+    const initialInvestmentState = localStorage.getItem('initialInvestmentState')
+    return initialInvestmentState ? JSON.parse(initialInvestmentState) : {
+        holdings: [
+            { id: uuid(), name: 'Coca-Cola', symbol: 'AMD', shares: 10, avgPrice: 50.00 },
+            { id: uuid(), name: 'AMD Tech', symbol: 'KO', shares: 6, avgPrice: 30.00 },
+            { id: uuid(), name: 'Coca-Cola', symbol: 'AMD', shares: 10, avgPrice: 50.00 },
+            { id: uuid(), name: 'AMD Tech', symbol: 'KO', shares: 7, avgPrice: 30.00 },
+            { id: uuid(), name: 'Coca-Cola', symbol: 'AMD', shares: 10, avgPrice: 50.00 },
+            { id: uuid(), name: 'AMD Tech', symbol: 'KO', shares: 10, avgPrice: 30.00 },
+            { id: uuid(), name: 'Coca-Cola', symbol: 'AMD', shares: 10, avgPrice: 50.00 },
+            { id: uuid(), name: 'AMD Tech', symbol: 'KO', shares: 10, avgPrice: 30.00 },
+            { id: uuid(), name: 'Coca-Cola', symbol: 'AMD', shares: 10, avgPrice: 50.00 },
+            { id: uuid(), name: 'AMD Tech', symbol: 'KO', shares: 10, avgPrice: 30.00 },
+        ],
+        watchList: [
+            { id: uuid(), name: 'Apple', symbol: ' AAPL' },
+            { id: uuid(), name: 'Apple', symbol: ' AAPL' },
+            { id: uuid(), name: 'Apple', symbol: ' AAPL' },
+            { id: uuid(), name: 'Apple', symbol: ' AAPL' },
+            { id: uuid(), name: 'Apple', symbol: ' AAPL' },
+            { id: uuid(), name: 'Apple', symbol: ' AAPL' },
+            { id: uuid(), name: 'Apple', symbol: ' AAPL' },
+            { id: uuid(), name: 'Apple', symbol: ' AAPL' },
+        ],
+    }
 }
+
+
 
 export const InvestmentContext = createContext()
 
+
+
 const InvestmentContextProvider = (props) => {
 
-    const [state, dispatch] = useReducer(HoldingsReducer, initialState)
+    const [initialInvestmentState] = useState(getInitialInvestmentState)
+    const [state, dispatch] = useReducer(HoldingsReducer, initialInvestmentState)
+
+
+    useEffect(() => {
+
+        localStorage.getItem('initialInvestmentState', JSON.stringify(state))
+
+    }, [initialInvestmentState, state])
 
     return (
         <InvestmentContext.Provider value={{

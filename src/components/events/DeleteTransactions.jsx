@@ -55,9 +55,7 @@ const DeleteTransactions = ({ isShown, setIsShown, setIsDeleteTransaction }) => 
                 {
                     transactions.map((item) => (
                         <Form.Item onChange={(e) => setDeleteThisTransaction(e.target.value)}>
-                          
-                            <Radio value={item.id}> {item.name} | Cost: {item.cost} | Category: {item.cost}  </Radio>
-                           
+                            <Radio value={item.id}> {item.name} | Cost: {item.cost} | Category: {item.category}  </Radio>
                         </Form.Item>
                     ))
                 }

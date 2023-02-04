@@ -40,8 +40,8 @@ const IncomeForm = ({ isShown, setIsShown, setIsItem }) => {
         setIsShown(current => !current)
         setIsItem(current => !current)
     }
- 
- 
+
+
     return (
         <div style={{ display: isShown ? 'block' : 'none' }}>
             <Form className='popup-form'

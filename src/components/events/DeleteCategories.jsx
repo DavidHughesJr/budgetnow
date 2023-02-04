@@ -55,9 +55,7 @@ const DeleteCategories = ({ isShown, setIsShown, setIsDeleteCategory }) => {
                     {
                         categories.map((item) => (
                             <Form.Item onChange={(e) => setDeleteThisCategory(e.target.value)}>
-
                                 <Radio value={item.id}> {item.name} | Limit: {item.limit}  </Radio>
-
                             </Form.Item>
                         ))
                     }

@@ -51,8 +51,8 @@ const Budget = () => {
   const totalSavings = budget[2]?.amount + budget[3]?.amount
 
   const budgetAndSavings = [
-    { text: 'Your Total Income', title: `$${totalIncome}`, subtitle1: 'Primary', subtitle1Text: `$${budget[0]?.amount}`, subtitle2: 'Secondary', subtitle2Text: `$${budget[1]?.amount}` },
-    { text: 'Your Total Savings', title: `$${totalSavings}`, subtitle1: 'Long Term', subtitle1Text: `$${budget[2]?.amount}`, subtitle2: 'Short Term', subtitle2Text: `$${budget[3]?.amount}` },
+    { heading: 'Your Total Income', amount: `$${totalIncome? totalIncome : 0}`, subtitle1: 'Primary', subtitle1Text: `$${budget[0]?.amount ? budget[0]?.amount : 0}`, subtitle2: 'Secondary', subtitle2Text: `$${budget[1]?.amount ? budget[1]?.amount : 0}` },
+    { heading: 'Your Total Savings', amount: `$${totalSavings? totalSavings : 0}`, subtitle1: 'Long Term', subtitle1Text: `$${budget[2]?.amount ? budget[2]?.amount : 0}`, subtitle2: 'Short Term', subtitle2Text: `$${budget[3]?.amount? budget[3]?.amount : 0}` },
   ]
 
   const totalCategorized = categories.reduce((acc, arr) => acc + arr.limit, 0)
@@ -159,13 +159,13 @@ const Budget = () => {
       <div className={!isShown ? 'layout' : 'layout popup-background'}>
         <Space className='layout' direction='horizontal' align=''>
           {
-            budgetAndSavings?.map(({ text, title, subtitle1, subtitle1Text, subtitle2, subtitle2Text }) =>
+            budgetAndSavings?.map(({ heading, amount, subtitle1, subtitle1Text, subtitle2, subtitle2Text }) =>
               <Card className='card-small no-border' bordered='false'>
-                <div key={text}>
+                <div key={heading}>
                   <div className='flex-between'>
-                    <Title level={5}> {text} </Title>
+                    <Title level={5}> {heading} </Title>
                   </div>
-                  <Title style={{ margin: 21.5 }}>  {title} </Title>
+                  <Title style={{ margin: 21.5 }}>  {amount} </Title>
                   <div>
                     <div className='flex-between' >
                       <Text> {subtitle1} </Text>
@@ -183,7 +183,7 @@ const Budget = () => {
           <Card className='card-wide-mini no-border' >
             <Space>
               {
-                <Progress width='155px' type="circle" percent={percentOnBudget} format={amount => percentOnBudget === '100' ? <h1 style={{ color: 'red' }}> ${totalIncome} </h1> : <h1> ${totalIncome} </h1>}
+                <Progress width='155px' type="circle" percent={percentOnBudget} format={amount => percentOnBudget === '100' ? <h1 style={{ color: 'red' }}> ${totalIncome} </h1> : <h1> ${totalIncome? totalIncome : 0} </h1>}
                   strokeColor={percentOnBudget === '100' ? 'red' : '#1890FF'} />
               }
               <div >
