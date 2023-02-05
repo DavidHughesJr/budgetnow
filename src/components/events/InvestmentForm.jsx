@@ -104,8 +104,8 @@ const InvestmentForm = ({ setIsShown, setIsAdd }) => {
                                             description={item.country}
                                         />
                                         <Space>
-                                            <Button onClick={(e) => addInvestment(item.instrument_name, item.symbol)} type='primary'> Add </Button>
-                                            <Button onClick={(e) => { addInvestment(item.instrument_name, item.symbol); setToWatchList(true) }} type='secondary'> Watch </Button>
+                                            <Button disabled={showConfirmation || toWatchList} onClick={(e) => { addInvestment(item.instrument_name, item.symbol); setShowConfirmation(true); setToWatchList(false);}} type='primary'> Add </Button>
+                                            <Button disabled={showConfirmation || toWatchList} onClick={(e) => { addInvestment(item.instrument_name, item.symbol); setToWatchList(true); setShowConfirmation(false) }} type='secondary'> Watch </Button>
                                         </Space>
                                         <Divider />
                                     </List.Item>
@@ -117,10 +117,13 @@ const InvestmentForm = ({ setIsShown, setIsAdd }) => {
                 </div>
             </Form>
             {
-                !showConfirmation ? '' :
+                showConfirmation ? 
                     <Form className='confirm-investment'
                         labelCol={{ span: 10 }}
                         wrapperCol={{ span: 14 }}>
+                        <div className='flex-end-btn'>
+                            <Button onClick={(e) => setShowConfirmation(current => !current)}> Cancel </Button>
+                        </div>
                         <Title level={5} style={{ color: 'white' }}>
                             Confirm Stock Info
                         </Title>
@@ -131,7 +134,21 @@ const InvestmentForm = ({ setIsShown, setIsAdd }) => {
                             <InputNumber onChange={(e) => setAvgPrice(e)} min={1} />
                         </Form.Item>
                         <Button onClick={handleConfirmation}> Confirm </Button>
-                    </Form>
+                    </Form> : ''
+            }
+            {
+                toWatchList ? 
+                    <Form className='confirm-investment'
+                        labelCol={{ span: 10 }}
+                        wrapperCol={{ span: 14 }}>
+                        <div className='flex-end-btn'>
+                            <Button onClick={(e) => setToWatchList(current => !current)}> Cancel </Button>
+                        </div>
+                        <Title level={5} style={{ color: 'white' }}>
+                            Do you want to add this to your watch list?
+                        </Title>
+                        <Button onClick={handleConfirmation}> Confirm </Button>
+                    </Form> : ''
             }
         </div>
     )

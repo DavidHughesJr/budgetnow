@@ -233,7 +233,6 @@ const Budget = () => {
                 renderItem={item => (
                   <List.Item
                     id={item.id}
-                    onClick={(e) => console.log(e.target)}
                   >
                     <List.Item.Meta
                       title={<Title level={5}> {item.name} </Title>}

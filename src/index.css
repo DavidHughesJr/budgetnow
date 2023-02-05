@@ -186,7 +186,7 @@
   display: flex;
   gap: 4px
 }
-.watch-list-btn {
+.flex-end-btn {
   display: flex;
   justify-content: flex-end;
 }

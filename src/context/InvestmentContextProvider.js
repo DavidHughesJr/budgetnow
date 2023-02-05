@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { createContext, useReducer } from "react";
 import uuid from "react-uuid";
-import { useId } from "react";
+
+
+
 
 const HoldingsReducer = (state, action) => {
   switch (action.type) {
@@ -33,7 +35,7 @@ const HoldingsReducer = (state, action) => {
     case "DELETE WATCHLIST":
       return {
         ...state,
-        transactions: state.transactions.filter(
+        watchList: state.watchList.filter(
           (item) => item.id !== action.payload
         ),
       };

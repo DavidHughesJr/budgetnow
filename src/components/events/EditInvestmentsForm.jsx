@@ -79,12 +79,6 @@ const EditInvestmentForm = ({ setIsShown, setIsEdit }) => {
         setIsShown(current => !current)
     }
 
-    console.log(editedValuedShares)
-    console.log(editedValueAvgPrice)
-
-  
-
-
     return (
         <div>
             <Form className='popup-form'>

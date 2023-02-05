@@ -2,6 +2,7 @@ import { Button, Card, Space, Typography, List } from 'antd'
 import React, { useState, useContext } from 'react'
 import InvestmentForm from '../events/InvestmentForm'
 import EditInvestmentForm from '../events/EditInvestmentsForm'
+import DeleteWatchListItem from '../events/DeleteWatchListItem'
 import { InvestmentContext } from '../../context/InvestmentContextProvider'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, Pagination } from 'swiper';
@@ -47,18 +48,22 @@ const Investment = () => {
 
   const [isAdd, setIsAdd] = useState(false)
   const [isEdit, setIsEdit] = useState(false)
+  const [isWatchList, setIsWatchList] = useState(false)
 
-  const handleAdd = event => {
+  const handleAdd = () => {
     setIsShown(true)
     setIsAdd(true)
   }
-  const handleEdit = event => {
+  const handleEdit = () => {
     setIsShown(true)
     setIsEdit(true)
   }
+  const handleWatchList = () => {
+    setIsShown(true)
+    setIsWatchList(true)
+  }
 
 
-console.log(isAdd)
 
   return (
     <>
@@ -69,6 +74,10 @@ console.log(isAdd)
       {
         isShown && isEdit && (
           <EditInvestmentForm setIsShown={setIsShown} setIsEdit={setIsEdit} />
+        )}
+        {
+        isShown && isWatchList && (
+          <DeleteWatchListItem setIsShown={setIsShown} setIsWatchList={setIsWatchList} />
         )}
       <div className={!isShown ? 'layout' : 'layout popup-background'} >
         <h2> Investments </h2>
@@ -124,8 +133,8 @@ console.log(isAdd)
               }
             </Swiper>
           </div>
-          <div className="watch-list-btn">
-          <Button> Delete WatchList Item </Button>
+          <div className="flex-end-btn">
+          <Button onClick={handleWatchList}> Delete WatchList Item </Button>
           </div>
           <div className='investment-layout' >
             <Card className='card-large overflow-scroll' hoverable={true}>
