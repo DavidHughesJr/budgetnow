@@ -3,8 +3,8 @@ import React, { useState, useContext } from 'react'
 import InvestmentForm from '../events/InvestmentForm'
 import EditInvestmentForm from '../events/EditInvestmentsForm'
 import { InvestmentContext } from '../../context/InvestmentContextProvider'
-import {Swiper, SwiperSlide} from 'swiper/react'
-import { Navigation, Pagination} from 'swiper';
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { Navigation, Pagination } from 'swiper';
 import { fetchOverviewNews } from '../../api/apiConfig'
 import 'swiper/css';
 import 'swiper/css/pagination';
@@ -21,8 +21,15 @@ const Investment = () => {
   const [isShown, setIsShown] = useState(false)
 
   const { holdings } = useContext(InvestmentContext)
+
+  holdings.sort(function (a, b) {
+    const textA = a.name.toUpperCase();
+    const textB = b.name.toUpperCase();
+    return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+  })
+
   const { watchList } = useContext(InvestmentContext)
-  
+
   const totalInvestmentAmount = holdings.reduce((acc, arr) => acc + arr.avgPrice * arr.shares, 0)
   const totalShares = holdings.reduce((acc, arr) => acc + arr.shares, 0)
   const avgPricePer = holdings.reduce((acc, arr) => (acc + arr.avgPrice * arr.shares) / (acc + arr.shares), 0).toFixed(2)
@@ -51,6 +58,7 @@ const Investment = () => {
   }
 
 
+console.log(isAdd)
 
   return (
     <>
@@ -68,12 +76,12 @@ const Investment = () => {
           <Button onClick={handleAdd} type='primary'> Add Stock </Button>
           <Button onClick={handleEdit} type='secondary'> Edit Stock </Button>
         </div>
-        <Space direction='vertical' style={{ width: '100%'}}>
+        <Space direction='vertical' style={{ width: '100%' }}>
           <Card className='card-wide' hoverable={true}>
             <Space className='flex-between'>
               <div>
                 <Title level={5}> Total Investment Value </Title>
-                <Title style={{margin: 0}}> ${totalInvestmentAmount} </Title>
+                <Title style={{ margin: 0 }}> ${totalInvestmentAmount} </Title>
               </div>
               <div>
                 <Title level={5}> Total Shares </Title>
@@ -104,17 +112,20 @@ const Investment = () => {
                 },
               }}
             >
-            {
-              holdings.map((item) =>
-              <SwiperSlide key={item.name}> 
-                <Card hoverable={true} title={item.name}>
-                  <Text> Shares: {item.shares} </Text>
-                  <Text> Average Price: ${item.avgPrice} </Text>
-                  </Card>
-                </SwiperSlide>
-              )
-            } 
+              {
+                holdings.map((item) =>
+                  <SwiperSlide key={item.name}>
+                    <Card hoverable={true} title={item.name}>
+                      <Text> Shares: {item.shares} </Text>
+                      <Text> Average Price: ${item.avgPrice} </Text>
+                    </Card>
+                  </SwiperSlide>
+                )
+              }
             </Swiper>
+          </div>
+          <div className="watch-list-btn">
+          <Button> Delete WatchList Item </Button>
           </div>
           <div className='investment-layout' >
             <Card className='card-large overflow-scroll' hoverable={true}>

@@ -5,32 +5,32 @@ import {
     Radio,
 } from 'antd';
 import React, { useState, useContext } from 'react';
-import { BudgetContext } from '../../context/BudgetContextProvider';
+import { InvestmentContext } from '../../context/InvestmentContextProvider';
 
 
-const DeleteCategories = ({ isShown, setIsShown, setIsDeleteCategory }) => {
+const DeleteCategories = ({ isShown, setIsShown, setIsDeleteWatchList }) => {
 
-    const { dispatch } = useContext(BudgetContext)
-    const { categories } = useContext(BudgetContext)
+    const { dispatch } = useContext(InvestmentContext)
+    const { watchList } = useContext(InvestmentContext)
 
-    const [deleteThisCategory, setDeleteThisCategory] = useState([])
+    const [deleteThisWatchList, setDeleteThisWatchList] = useState([])
 
 
 
     const handleClose = () => {
         setIsShown(current => !current)
-        setIsDeleteCategory(current => !current)
+        setIsDeleteWatchList(current => !current)
     }
 
     const handleSubmit = (event) => {
         event.preventDefault()
 
         dispatch({
-            type: 'DELETE CATEGORY',
-            payload: deleteThisCategory,
+            type: 'DELETE WATCHLIST',
+            payload: deleteThisWatchList,
         })
         setIsShown(current => !current)
-        setIsDeleteCategory(current => !current)
+        setIsDeleteWatchList(current => !current)
     }
 
 
@@ -53,8 +53,8 @@ const DeleteCategories = ({ isShown, setIsShown, setIsDeleteCategory }) => {
                 </Typography>
                 <Radio.Group>
                     {
-                        categories.map((item) => (
-                            <Form.Item onChange={(e) => setDeleteThisCategory(e.target.value)}>
+                        watchList.map((item) => (
+                            <Form.Item onChange={(e) => setDeleteThisWatchList(e.target.value)}>
                                 <Radio value={item.id}> {item.name} | Limit: {item.limit}  </Radio>
                             </Form.Item>
                         ))

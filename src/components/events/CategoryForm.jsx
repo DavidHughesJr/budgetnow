@@ -15,7 +15,7 @@ const CategoryForm = ({ isShown, setIsShown, setIsCategory }) => {
     const [name, setName] = useState('')
     const [limit, setLimit] = useState('')
 
-    const handleClose = (event) => {
+    const handleClose = () => {
         setIsShown(current => !current)
         setIsCategory(current => !current)
     }

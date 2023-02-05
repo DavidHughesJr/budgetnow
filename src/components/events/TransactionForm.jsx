@@ -19,7 +19,7 @@ const TransactionForm = ({ isShown, setIsShown, setIsTransaction }) => {
   const [category, setCategory] = useState('')
   const [cost, setCost] = useState('')
 
-  const handleClose = (event) => {
+  const handleClose = () => {
     setIsShown(current => !current)
     setIsTransaction(current => !current)
   }

@@ -21,7 +21,7 @@ const IncomeForm = ({ isShown, setIsShown, setIsItem }) => {
 
 
 
-    const handleClose = (event) => {
+    const handleClose = () => {
         setIsShown(current => !current)
         setIsItem(current => !current)
     }

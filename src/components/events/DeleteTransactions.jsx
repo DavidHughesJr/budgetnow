@@ -17,7 +17,7 @@ const DeleteTransactions = ({ isShown, setIsShown, setIsDeleteTransaction }) => 
 
 
 
-    const handleClose = (event) => {
+    const handleClose = () => {
         setIsShown(current => !current)
         setIsDeleteTransaction(current => !current)
     }
