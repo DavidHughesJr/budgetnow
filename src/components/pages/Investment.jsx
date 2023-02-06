@@ -35,6 +35,7 @@ const Investment = () => {
   const totalShares = holdings.reduce((acc, arr) => acc + arr.shares, 0)
   const avgPricePer = holdings.reduce((acc, arr) => (acc + arr.avgPrice * arr.shares) / (acc + arr.shares), 0).toFixed(2)
 
+  console.log(holdings.reduce((acc, arr) => (acc + arr.avgPrice * arr.shares) / (acc + arr.shares), 0).toFixed(2))
 
   const [investmentTips, setInvestmentTips] = useState([])
 
